@@ -1,5 +1,11 @@
 {
   "version": 2,
+  "builds": [
+    {
+      "src": "index.php",
+      "use": "vercel-php@0.6.0"
+    }
+  ],
   "routes": [
     {
       "src": "/public/(.*)",
@@ -21,10 +27,5 @@
   "env": {
     "CI_ENVIRONMENT": "production",
     "APP_TIMEZONE": "America/Sao_Paulo"
-  },
-  "functions": {
-    "index.php": {
-      "runtime": "vercel-php@0.6.0"
-    }
   }
 }
