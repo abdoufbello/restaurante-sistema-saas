@@ -1,0 +1,167 @@
+# 🚀 VARIÁVEIS DE AMBIENTE PARA VERCEL
+# Copie e cole cada linha no dashboard da Vercel (Settings > Environment Variables)
+
+# ========================================
+# 🔥 ESSENCIAIS (OBRIGATÓRIAS)
+# ========================================
+
+CI_ENVIRONMENT=production
+
+# ⚠️ IMPORTANTE: Substitua pela URL real da Vercel
+app_baseURL=https://seu-projeto.vercel.app
+
+# 🔒 CHAVES DE SEGURANÇA (GERADAS AUTOMATICAMENTE)
+encryption_key=6583f600e2c53bc93fb9b51e55674634
+jwt_secret=52d7db95a4be1c60ecfa64b06806f702f777496554d221d2d209e9885ef65e8b
+jwt_expire=3600
+
+# ========================================
+# 🗄️ BANCO DE DADOS (OBRIGATÓRIO)
+# ========================================
+
+# ⚠️ ATENÇÃO: PlanetScale removeu o plano gratuito!
+# Use Railway (mais fácil) ou veja ALTERNATIVAS_PLANETSCALE.md
+#
+# Railway: https://railway.app
+# 1. Crie conta gratuita ($5 crédito/mês)
+# 2. New Project > Database > MySQL
+# 3. Clique no banco > Connect > Copie as credenciais:
+
+database_default_hostname=SEU_HOST_RAILWAY
+database_default_database=railway
+database_default_username=root
+database_default_password=SUA_SENHA_RAILWAY
+database_default_DBDriver=MySQLi
+database_default_port=3306
+
+# Para Railway (SSL obrigatório)
+database_default_encrypt=true
+database_default_compress=false
+database_default_strictOn=false
+
+# ========================================
+# 📧 EMAIL (RECOMENDADO)
+# ========================================
+
+# 📝 Configure com Gmail ou outro provedor
+email_fromEmail=noreply@seu-dominio.com
+email_fromName=Sistema Restaurante
+email_SMTPHost=smtp.gmail.com
+email_SMTPUser=SEU_EMAIL@gmail.com
+email_SMTPPass=SUA_SENHA_DE_APP_GMAIL
+email_SMTPPort=587
+email_SMTPCrypto=tls
+
+# ========================================
+# 📊 ANALYTICS (RECOMENDADO)
+# ========================================
+
+# 📝 Obtenha em analytics.google.com
+google_analyticsId=G-XXXXXXXXXX
+
+# 📝 Obtenha em business.facebook.com
+facebook_pixelId=SEU_FACEBOOK_PIXEL_ID
+
+# 📝 Obtenha em hotjar.com
+hotjar_siteId=SEU_HOTJAR_SITE_ID
+
+# ========================================
+# 📱 WHATSAPP BUSINESS (OPCIONAL)
+# ========================================
+
+# 📝 Configure em developers.facebook.com
+whatsapp_token=SEU_TOKEN_WHATSAPP_BUSINESS
+whatsapp_phoneId=SEU_PHONE_NUMBER_ID
+whatsapp_webhookToken=b56b47fa3e1936102d5e3166646c7545
+whatsapp_apiUrl=https://graph.facebook.com/v18.0/
+
+# ========================================
+# 💳 PAGAMENTOS (OPCIONAL)
+# ========================================
+
+# Mercado Pago
+mercadopago_publicKey=SEU_PUBLIC_KEY_MP
+mercadopago_accessToken=SEU_ACCESS_TOKEN_MP
+mercadopago_webhookSecret=c4520bf46aa345d1f93d1d39b56ce9264ae802434b35c918
+
+# Stripe
+stripe_publicKey=SEU_PUBLIC_KEY_STRIPE
+stripe_secretKey=SEU_SECRET_KEY_STRIPE
+stripe_webhookSecret=373a3cda5894c85b5b45dbb649445af2a6a332f8a30a31c2
+
+# ========================================
+# 🚚 DELIVERY (OPCIONAL)
+# ========================================
+
+# iFood
+ifood_clientId=SEU_CLIENT_ID_IFOOD
+ifood_clientSecret=SEU_CLIENT_SECRET_IFOOD
+ifood_merchantId=SEU_MERCHANT_ID_IFOOD
+
+# Uber Eats
+ubereats_clientId=SEU_CLIENT_ID_UBER
+ubereats_clientSecret=SEU_CLIENT_SECRET_UBER
+ubereats_storeId=SEU_STORE_ID_UBER
+
+# ========================================
+# ☁️ STORAGE (OPCIONAL)
+# ========================================
+
+# AWS S3
+aws_accessKey=SEU_AWS_ACCESS_KEY
+aws_secretKey=SEU_AWS_SECRET_KEY
+aws_region=us-east-1
+aws_bucket=seu-bucket-uploads
+
+# ========================================
+# 🔧 CONFIGURAÇÕES AVANÇADAS
+# ========================================
+
+cache_handler=file
+cache_storePath=writable/cache/
+logger_threshold=3
+
+# CORS
+cors_allowedOrigins=["https://seu-projeto.vercel.app"]
+cors_allowedMethods=["GET","POST","PUT","DELETE","OPTIONS"]
+cors_allowedHeaders=["Content-Type","Authorization","X-Requested-With"]
+
+# Rate Limiting
+rateLimit_enabled=true
+rateLimit_requests=100
+rateLimit_window=3600
+
+# Maintenance
+maintenance_enabled=false
+maintenance_message=Sistema em manutenção. Voltamos em breve!
+
+# Backup
+backup_enabled=true
+backup_schedule=0 2 * * *
+backup_retention=30
+
+# Monitoring
+monitoring_enabled=true
+monitoring_webhookUrl=https://hooks.slack.com/seu-webhook
+monitoring_alertEmail=admin@seu-dominio.com
+
+# ========================================
+# 📋 INSTRUÇÕES
+# ========================================
+
+# 1. ESSENCIAIS: Configure primeiro as variáveis marcadas como OBRIGATÓRIAS
+# 2. BANCO: Crie um banco MySQL (PlanetScale recomendado)
+# 3. EMAIL: Configure Gmail com senha de app
+# 4. ANALYTICS: Configure Google Analytics para acompanhar visitantes
+# 5. OPCIONAIS: Adicione conforme necessário
+
+# 🔒 SEGURANÇA:
+# - NUNCA compartilhe essas chaves
+# - Use chaves diferentes para desenvolvimento/produção
+# - Mantenha as chaves em local seguro
+
+# 🚀 DEPLOY:
+# 1. Configure as variáveis na Vercel
+# 2. Faça o deploy
+# 3. Teste todas as funcionalidades
+# 4. Configure domínio personalizado
