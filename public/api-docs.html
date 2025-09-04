@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Management API - Documentação</title>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist@5.10.3/swagger-ui.css" />
+    <style>
+        html {
+            box-sizing: border-box;
+            overflow: -moz-scrollbars-vertical;
+            overflow-y: scroll;
+        },
+        *, *:before, *:after {
+            box-sizing: inherit;
+        }
+        body {
+            margin:0;
+            background: #fafafa;
+        }
+        .swagger-ui .topbar {
+            background-color: #2c3e50;
+        }
+        .swagger-ui .topbar .download-url-wrapper .select-label {
+            color: #fff;
+        }
+        .swagger-ui .topbar .download-url-wrapper input[type=text] {
+            border: 2px solid #34495e;
+        }
+        .swagger-ui .info .title {
+            color: #2c3e50;
+        }
+        .custom-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .custom-header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 300;
+        }
+        .custom-header p {
+            margin: 0.5rem 0 0 0;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        .api-info {
+            max-width: 1200px;
+            margin: 0 auto 2rem auto;
+            padding: 0 1rem;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .info-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid #667eea;
+        }
+        .info-card h3 {
+            margin: 0 0 1rem 0;
+            color: #2c3e50;
+            font-size: 1.3rem;
+        }
+        .info-card p {
+            margin: 0;
+            color: #666;
+            line-height: 1.6;
+        }
+        .auth-info {
+            background: #e8f4fd;
+            border: 1px solid #bee5eb;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .auth-info h3 {
+            margin: 0 0 1rem 0;
+            color: #0c5460;
+        }
+        .auth-info code {
+            background: #d1ecf1;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        .endpoints-summary {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .endpoints-summary h3 {
+            margin: 0 0 1rem 0;
+            color: #2c3e50;
+        }
+        .endpoint-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .endpoint-group {
+            background: #f8f9fa;
+            border-radius: 6px;
+            padding: 1rem;
+        }
+        .endpoint-group h4 {
+            margin: 0 0 0.5rem 0;
+            color: #495057;
+            font-size: 1rem;
+        }
+        .endpoint-group ul {
+            margin: 0;
+            padding-left: 1.2rem;
+            list-style-type: none;
+        }
+        .endpoint-group li {
+            margin: 0.3rem 0;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        .endpoint-group li:before {
+            content: "→";
+            margin-right: 0.5rem;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="custom-header">
+        <h1>Restaurant Management API</h1>
+        <p>Documentação Completa da API RESTful v2.0</p>
+    </div>
+
+    <div class="api-info">
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>🚀 Recursos Principais</h3>
+                <p>API completa para gerenciamento de restaurantes com autenticação JWT, multi-tenancy, sistema de assinaturas e analytics avançados.</p>
+            </div>
+            <div class="info-card">
+                <h3>🔐 Segurança</h3>
+                <p>Autenticação JWT com refresh tokens, sistema de roles e permissões granulares, rate limiting e proteção CORS.</p>
+            </div>
+            <div class="info-card">
+                <h3>📊 Analytics</h3>
+                <p>Dashboard completo com métricas de vendas, relatórios personalizáveis, análise de performance e exportação de dados.</p>
+            </div>
+            <div class="info-card">
+                <h3>🏢 Multi-Tenancy</h3>
+                <p>Isolamento completo de dados por restaurante, planos de assinatura flexíveis e gerenciamento de recursos por tenant.</p>
+            </div>
+        </div>
+
+        <div class="auth-info">
+            <h3>🔑 Como Usar a Autenticação</h3>
+            <p><strong>1. Faça login:</strong> <code>POST /api/auth/login</code> com email e senha</p>
+            <p><strong>2. Use o token:</strong> Inclua o header <code>Authorization: Bearer {seu_token}</code> em todas as requisições protegidas</p>
+            <p><strong>3. Renove quando necessário:</strong> <code>POST /api/auth/refresh</code> com o refresh_token</p>
+        </div>
+
+        <div class="endpoints-summary">
+            <h3>📋 Resumo dos Endpoints</h3>
+            <div class="endpoint-list">
+                <div class="endpoint-group">
+                    <h4>Autenticação</h4>
+                    <ul>
+                        <li>Login e Registro</li>
+                        <li>Refresh Token</li>
+                        <li>Logout e Sessões</li>
+                        <li>Recuperação de Senha</li>
+                    </ul>
+                </div>
+                <div class="endpoint-group">
+                    <h4>Usuários</h4>
+                    <ul>
+                        <li>CRUD Completo</li>
+                        <li>Gerenciamento de Roles</li>
+                        <li>Busca e Filtros</li>
+                        <li>Estatísticas</li>
+                    </ul>
+                </div>
+                <div class="endpoint-group">
+                    <h4>Produtos</h4>
+                    <ul>
+                        <li>Catálogo Completo</li>
+                        <li>Controle de Estoque</li>
+                        <li>Categorização</li>
+                        <li>Imagens e Mídia</li>
+                    </ul>
+                </div>
+                <div class="endpoint-group">
+                    <h4>Pedidos</h4>
+                    <ul>
+                        <li>Gestão de Pedidos</li>
+                        <li>Status e Workflow</li>
+                        <li>Pagamentos</li>
+                        <li>Relatórios</li>
+                    </ul>
+                </div>
+                <div class="endpoint-group">
+                    <h4>Analytics</h4>
+                    <ul>
+                        <li>Dashboard Executivo</li>
+                        <li>Métricas de Vendas</li>
+                        <li>Análise de Clientes</li>
+                        <li>Exportação de Dados</li>
+                    </ul>
+                </div>
+                <div class="endpoint-group">
+                    <h4>Sistema</h4>
+                    <ul>
+                        <li>Health Check</li>
+                        <li>Configurações</li>
+                        <li>Logs e Monitoramento</li>
+                        <li>Webhooks</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="swagger-ui"></div>
+
+    <script src="https://unpkg.com/swagger-ui-dist@5.10.3/swagger-ui-bundle.js"></script>
+    <script src="https://unpkg.com/swagger-ui-dist@5.10.3/swagger-ui-standalone-preset.js"></script>
+    <script>
+        window.onload = function() {
+            // Detecta se está rodando localmente ou em produção
+            const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+            const apiDocsUrl = isLocal ? './api-docs.json' : '/api-docs.json';
+            
+            const ui = SwaggerUIBundle({
+                url: apiDocsUrl,
+                dom_id: '#swagger-ui',
+                deepLinking: true,
+                presets: [
+                    SwaggerUIBundle.presets.apis,
+                    SwaggerUIStandalonePreset
+                ],
+                plugins: [
+                    SwaggerUIBundle.plugins.DownloadUrl
+                ],
+                layout: "StandaloneLayout",
+                validatorUrl: null,
+                tryItOutEnabled: true,
+                supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
+                onComplete: function() {
+                    console.log('Swagger UI carregado com sucesso!');
+                },
+                onFailure: function(error) {
+                    console.error('Erro ao carregar Swagger UI:', error);
+                },
+                docExpansion: 'list',
+                apisSorter: 'alpha',
+                operationsSorter: 'alpha',
+                defaultModelsExpandDepth: 1,
+                defaultModelExpandDepth: 1,
+                displayOperationId: false,
+                displayRequestDuration: true,
+                filter: true,
+                showExtensions: true,
+                showCommonExtensions: true,
+                requestInterceptor: function(request) {
+                    // Adiciona headers personalizados se necessário
+                    request.headers['Accept'] = 'application/json';
+                    return request;
+                },
+                responseInterceptor: function(response) {
+                    // Log das respostas para debug
+                    console.log('API Response:', response);
+                    return response;
+                }
+            });
+
+            // Adiciona funcionalidade de tema escuro
+            const toggleTheme = () => {
+                document.body.classList.toggle('dark-theme');
+                localStorage.setItem('swagger-theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
+            };
+
+            // Restaura tema salvo
+            if (localStorage.getItem('swagger-theme') === 'dark') {
+                document.body.classList.add('dark-theme');
+            }
+
+            // Adiciona botão de tema (opcional)
+            setTimeout(() => {
+                const topbar = document.querySelector('.swagger-ui .topbar');
+                if (topbar) {
+                    const themeButton = document.createElement('button');
+                    themeButton.innerHTML = '🌙';
+                    themeButton.style.cssText = 'background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; margin-left: 1rem;';
+                    themeButton.onclick = toggleTheme;
+                    themeButton.title = 'Alternar tema';
+                    topbar.appendChild(themeButton);
+                }
+            }, 1000);
+        };
+    </script>
+
+    <style>
+        /* Tema escuro opcional */
+        .dark-theme {
+            background: #1a1a1a !important;
+        }
+        .dark-theme .swagger-ui {
+            filter: invert(1) hue-rotate(180deg);
+        }
+        .dark-theme .swagger-ui img {
+            filter: invert(1) hue-rotate(180deg);
+        }
+    </style>
+</body>
+</html>

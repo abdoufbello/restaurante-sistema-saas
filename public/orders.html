@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos - Prato Rápido SaaS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="assets/css/prato-rapido-theme.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1E1E1E;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+        
+        .sidebar {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);
+        }
+        
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 0.75rem 1rem;
+            margin: 0.25rem 0;
+            border-radius: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .main-content {
+            background-color: #F5F5F5;
+            min-height: 100vh;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);
+            border: none;
+            border-radius: 10px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 0, 0.3);
+        }
+        
+        .saas-badge {
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .plan-info {
+            background: #E8F4FD;
+            border: 1px solid #B3D9F2;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .order-card {
+            border-left: 4px solid #FF6B00;
+            transition: all 0.3s;
+        }
+        
+        .order-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .status-badge {
+            font-size: 0.75rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+        }
+        
+        .filter-tabs .nav-link {
+            border: none;
+            color: #666;
+            background: transparent;
+            border-radius: 25px;
+            padding: 0.5rem 1.5rem;
+            margin: 0 0.25rem;
+        }
+        
+        .filter-tabs .nav-link.active {
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);
+            color: white;
+        }
+        
+        .real-time-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #28a745;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar p-3">
+                <div class="text-center mb-4">
+                    <i class="fas fa-utensils text-white" style="font-size: 2.5rem;"></i>
+                    <h4 class="text-white mt-2">Prato Rápido</h4>
+                    <span class="saas-badge">SaaS Platform</span>
+                </div>
+                
+                <div class="plan-info text-center">
+                    <h6 class="text-primary mb-1">Plano Professional</h6>
+                    <small class="text-muted">R$ 199/mês</small>
+                </div>
+                
+                <nav class="nav flex-column">
+                    <a class="nav-link" href="dashboard.html">
+                        <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                    </a>
+                    <a class="nav-link" href="kiosk.html">
+                        <i class="fas fa-desktop me-2"></i>Totem Self-Service
+                    </a>
+                    <a class="nav-link active" href="#">
+                        <i class="fas fa-shopping-cart me-2"></i>Pedidos
+                    </a>
+                    <a class="nav-link" href="dishes.html">
+                        <i class="fas fa-utensils me-2"></i>Cardápio
+                    </a>
+                    <a class="nav-link" href="reports.html">
+                        <i class="fas fa-chart-bar me-2"></i>Relatórios
+                    </a>
+                    <a class="nav-link" href="plans.html">
+                        <i class="fas fa-credit-card me-2"></i>Planos & Cobrança
+                    </a>
+                    <hr class="text-white-50">
+                    <a class="nav-link" href="settings.html">
+                        <i class="fas fa-cog me-2"></i>Configurações
+                    </a>
+                    <a class="nav-link" href="privacy.html">
+                        <i class="fas fa-shield-alt me-2"></i>LGPD & Privacidade
+                    </a>
+                    <a class="nav-link" href="login.html">
+                        <i class="fas fa-sign-out-alt me-2"></i>Sair
+                    </a>
+                </nav>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 main-content p-4">
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h1>Gerenciamento de Pedidos</h1>
+                        <p class="text-muted mb-0">
+                            <span class="real-time-indicator"></span>
+                            Atualizações em tempo real - Restaurante Demo SaaS
+                        </p>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary me-2" onclick="refreshOrders()">
+                            <i class="fas fa-sync-alt me-1"></i>Atualizar
+                        </button>
+                        <button class="btn btn-outline-primary" onclick="exportOrders()">
+                            <i class="fas fa-download me-1"></i>Exportar
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Stats Cards -->
+                <div class="row mb-4">
+                    <div class="col-md-3 mb-3">
+                        <div class="card text-center p-3">
+                            <i class="fas fa-clock text-warning" style="font-size: 2rem;"></i>
+                            <h3 class="mt-2 mb-1" id="pendingCount">8</h3>
+                            <p class="text-muted mb-0">Pendentes</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card text-center p-3">
+                            <i class="fas fa-fire text-danger" style="font-size: 2rem;"></i>
+                            <h3 class="mt-2 mb-1" id="preparingCount">12</h3>
+                            <p class="text-muted mb-0">Preparando</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card text-center p-3">
+                            <i class="fas fa-check-circle text-success" style="font-size: 2rem;"></i>
+                            <h3 class="mt-2 mb-1" id="readyCount">5</h3>
+                            <p class="text-muted mb-0">Prontos</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card text-center p-3">
+                            <i class="fas fa-truck text-info" style="font-size: 2rem;"></i>
+                            <h3 class="mt-2 mb-1" id="deliveredCount">47</h3>
+                            <p class="text-muted mb-0">Entregues Hoje</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Filter Tabs -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <ul class="nav nav-pills filter-tabs justify-content-center" id="orderTabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-filter="all" href="#">Todos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-filter="pending" href="#">Pendentes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-filter="preparing" href="#">Preparando</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-filter="ready" href="#">Prontos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-filter="delivered" href="#">Entregues</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Orders List -->
+                <div id="ordersList">
+                    <!-- Orders will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Order Details Modal -->
+    <div class="modal fade" id="orderModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detalhes do Pedido</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="orderModalBody">
+                    <!-- Order details will be loaded here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary" onclick="updateOrderStatus()">Atualizar Status</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Dados simulados de pedidos
+        let orders = [
+            {
+                id: 1047,
+                customer: 'Maria Santos',
+                items: ['Hambúrguer Artesanal', 'Batata Frita', 'Refrigerante'],
+                total: 45.90,
+                status: 'preparing',
+                time: '14:32',
+                phone: '(11) 99999-9999',
+                address: 'Rua das Flores, 123'
+            },
+            {
+                id: 1046,
+                customer: 'João Silva',
+                items: ['Pizza Margherita', 'Suco Natural'],
+                total: 38.50,
+                status: 'ready',
+                time: '14:28',
+                phone: '(11) 88888-8888',
+                address: 'Av. Paulista, 456'
+            },
+            {
+                id: 1045,
+                customer: 'Ana Costa',
+                items: ['Lasanha Bolonhesa', 'Refrigerante'],
+                total: 32.90,
+                status: 'delivered',
+                time: '14:15',
+                phone: '(11) 77777-7777',
+                address: 'Rua Augusta, 789'
+            },
+            {
+                id: 1044,
+                customer: 'Pedro Oliveira',
+                items: ['Salada Caesar', 'Água'],
+                total: 24.90,
+                status: 'pending',
+                time: '14:45',
+                phone: '(11) 66666-6666',
+                address: 'Rua Oscar Freire, 321'
+            },
+            {
+                id: 1043,
+                customer: 'Carla Mendes',
+                items: ['Risotto de Camarão', 'Vinho Branco'],
+                total: 67.50,
+                status: 'preparing',
+                time: '14:20',
+                phone: '(11) 55555-5555',
+                address: 'Alameda Santos, 654'
+            }
+        ];
+        
+        let currentFilter = 'all';
+        let selectedOrderId = null;
+        
+        // Função para obter classe CSS do status
+        function getStatusClass(status) {
+            const classes = {
+                'pending': 'bg-warning text-dark',
+                'preparing': 'bg-danger',
+                'ready': 'bg-success',
+                'delivered': 'bg-info'
+            };
+            return classes[status] || 'bg-secondary';
+        }
+        
+        // Função para obter texto do status
+        function getStatusText(status) {
+            const texts = {
+                'pending': 'Pendente',
+                'preparing': 'Preparando',
+                'ready': 'Pronto',
+                'delivered': 'Entregue'
+            };
+            return texts[status] || 'Desconhecido';
+        }
+        
+        // Função para renderizar pedidos
+        function renderOrders() {
+            const container = document.getElementById('ordersList');
+            const filteredOrders = currentFilter === 'all' ? orders : orders.filter(order => order.status === currentFilter);
+            
+            if (filteredOrders.length === 0) {
+                container.innerHTML = `
+                    <div class="card text-center p-5">
+                        <i class="fas fa-inbox text-muted" style="font-size: 3rem;"></i>
+                        <h5 class="text-muted mt-3">Nenhum pedido encontrado</h5>
+                        <p class="text-muted">Não há pedidos para o filtro selecionado.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = filteredOrders.map(order => `
+                <div class="card order-card mb-3">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-md-2">
+                                <h5 class="mb-1">#${order.id}</h5>
+                                <small class="text-muted">${order.time}</small>
+                            </div>
+                            <div class="col-md-3">
+                                <h6 class="mb-1">${order.customer}</h6>
+                                <small class="text-muted">${order.phone}</small>
+                            </div>
+                            <div class="col-md-3">
+                                <p class="mb-1">${order.items.join(', ')}</p>
+                                <small class="text-muted">${order.items.length} item(s)</small>
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <h5 class="mb-1">R$ ${order.total.toFixed(2).replace('.', ',')}</h5>
+                                <span class="badge status-badge ${getStatusClass(order.status)}">
+                                    ${getStatusText(order.status)}
+                                </span>
+                            </div>
+                            <div class="col-md-2 text-end">
+                                <button class="btn btn-outline-primary btn-sm me-1" onclick="viewOrder(${order.id})">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <div class="btn-group">
+                                    <button class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown">
+                                        <i class="fas fa-cog"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#" onclick="changeStatus(${order.id}, 'preparing')">Marcar como Preparando</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="changeStatus(${order.id}, 'ready')">Marcar como Pronto</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="changeStatus(${order.id}, 'delivered')">Marcar como Entregue</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item text-danger" href="#" onclick="cancelOrder(${order.id})">Cancelar Pedido</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Função para atualizar contadores
+        function updateCounters() {
+            document.getElementById('pendingCount').textContent = orders.filter(o => o.status === 'pending').length;
+            document.getElementById('preparingCount').textContent = orders.filter(o => o.status === 'preparing').length;
+            document.getElementById('readyCount').textContent = orders.filter(o => o.status === 'ready').length;
+            document.getElementById('deliveredCount').textContent = orders.filter(o => o.status === 'delivered').length;
+        }
+        
+        // Função para visualizar detalhes do pedido
+        function viewOrder(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+            
+            selectedOrderId = orderId;
+            
+            document.getElementById('orderModalBody').innerHTML = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Informações do Pedido</h6>
+                        <p><strong>Número:</strong> #${order.id}</p>
+                        <p><strong>Horário:</strong> ${order.time}</p>
+                        <p><strong>Status:</strong> <span class="badge ${getStatusClass(order.status)}">${getStatusText(order.status)}</span></p>
+                        <p><strong>Total:</strong> R$ ${order.total.toFixed(2).replace('.', ',')}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Informações do Cliente</h6>
+                        <p><strong>Nome:</strong> ${order.customer}</p>
+                        <p><strong>Telefone:</strong> ${order.phone}</p>
+                        <p><strong>Endereço:</strong> ${order.address}</p>
+                    </div>
+                </div>
+                <hr>
+                <h6>Itens do Pedido</h6>
+                <ul class="list-group list-group-flush">
+                    ${order.items.map(item => `<li class="list-group-item d-flex justify-content-between align-items-center">${item}<span class="badge bg-primary rounded-pill">1</span></li>`).join('')}
+                </ul>
+            `;
+            
+            new bootstrap.Modal(document.getElementById('orderModal')).show();
+        }
+        
+        // Função para alterar status do pedido
+        function changeStatus(orderId, newStatus) {
+            const orderIndex = orders.findIndex(o => o.id === orderId);
+            if (orderIndex !== -1) {
+                orders[orderIndex].status = newStatus;
+                renderOrders();
+                updateCounters();
+                
+                // Mostrar notificação
+                showNotification(`Pedido #${orderId} atualizado para ${getStatusText(newStatus)}`, 'success');
+            }
+        }
+        
+        // Função para cancelar pedido
+        function cancelOrder(orderId) {
+            if (confirm('Tem certeza que deseja cancelar este pedido?')) {
+                orders = orders.filter(o => o.id !== orderId);
+                renderOrders();
+                updateCounters();
+                showNotification(`Pedido #${orderId} cancelado`, 'warning');
+            }
+        }
+        
+        // Função para atualizar status do pedido selecionado
+        function updateOrderStatus() {
+            if (selectedOrderId) {
+                const order = orders.find(o => o.id === selectedOrderId);
+                if (order) {
+                    const nextStatus = {
+                        'pending': 'preparing',
+                        'preparing': 'ready',
+                        'ready': 'delivered'
+                    };
+                    
+                    if (nextStatus[order.status]) {
+                        changeStatus(selectedOrderId, nextStatus[order.status]);
+                        bootstrap.Modal.getInstance(document.getElementById('orderModal')).hide();
+                    }
+                }
+            }
+        }
+        
+        // Função para atualizar pedidos
+        function refreshOrders() {
+            showNotification('Pedidos atualizados', 'info');
+            // Simular novos pedidos
+            if (Math.random() > 0.5) {
+                const newOrder = {
+                    id: Math.max(...orders.map(o => o.id)) + 1,
+                    customer: 'Cliente ' + Math.floor(Math.random() * 1000),
+                    items: ['Prato do Dia'],
+                    total: Math.random() * 50 + 20,
+                    status: 'pending',
+                    time: new Date().toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'}),
+                    phone: '(11) 99999-9999',
+                    address: 'Endereço do cliente'
+                };
+                orders.unshift(newOrder);
+            }
+            renderOrders();
+            updateCounters();
+        }
+        
+        // Função para exportar pedidos
+        function exportOrders() {
+            showNotification('Exportação iniciada', 'info');
+            // Simular exportação
+            setTimeout(() => {
+                showNotification('Pedidos exportados com sucesso', 'success');
+            }, 2000);
+        }
+        
+        // Função para mostrar notificações
+        function showNotification(message, type) {
+            const alertClass = {
+                'success': 'alert-success',
+                'warning': 'alert-warning',
+                'info': 'alert-info',
+                'danger': 'alert-danger'
+            }[type] || 'alert-info';
+            
+            const notification = document.createElement('div');
+            notification.className = `alert ${alertClass} alert-dismissible fade show position-fixed`;
+            notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+            notification.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 5000);
+        }
+        
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configurar filtros
+            document.querySelectorAll('.filter-tabs .nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remover classe active de todos os links
+                    document.querySelectorAll('.filter-tabs .nav-link').forEach(l => l.classList.remove('active'));
+                    
+                    // Adicionar classe active ao link clicado
+                    this.classList.add('active');
+                    
+                    // Atualizar filtro
+                    currentFilter = this.getAttribute('data-filter');
+                    renderOrders();
+                });
+            });
+            
+            // Renderizar pedidos iniciais
+            renderOrders();
+            updateCounters();
+            
+            // Atualizar pedidos automaticamente a cada 30 segundos
+            setInterval(() => {
+                if (Math.random() > 0.7) {
+                    refreshOrders();
+                }
+            }, 30000);
+        });
+    </script>
+</body>
+</html>

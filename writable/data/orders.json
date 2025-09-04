@@ -1,0 +1,242 @@
+[
+  {
+    "id": 1,
+    "restaurant_id": 1,
+    "customer_name": "João Silva",
+    "customer_phone": "(11) 99999-1111",
+    "items": [
+      {
+        "dish_id": 1,
+        "dish_name": "Pizza Margherita",
+        "quantity": 1,
+        "unit_price": 35.90,
+        "total_price": 35.90
+      },
+      {
+        "dish_id": 2,
+        "dish_name": "Refrigerante 350ml",
+        "quantity": 2,
+        "unit_price": 5.50,
+        "total_price": 11.00
+      }
+    ],
+    "subtotal": 46.90,
+    "tax": 4.69,
+    "total": 51.59,
+    "status": "delivered",
+    "payment_method": "credit_card",
+    "created_at": "2024-01-15 18:30:00",
+    "updated_at": "2024-01-15 19:15:00",
+    "notes": "Sem cebola na pizza"
+  },
+  {
+    "id": 2,
+    "restaurant_id": 2,
+    "customer_name": "Maria Santos",
+    "customer_phone": "(11) 88888-2222",
+    "items": [
+      {
+        "dish_id": 6,
+        "dish_name": "Burger Clássico",
+        "quantity": 2,
+        "unit_price": 28.90,
+        "total_price": 57.80
+      },
+      {
+        "dish_id": 7,
+        "dish_name": "Batata Frita",
+        "quantity": 1,
+        "unit_price": 12.90,
+        "total_price": 12.90
+      }
+    ],
+    "subtotal": 70.70,
+    "tax": 7.07,
+    "total": 77.77,
+    "status": "ready",
+    "payment_method": "pix",
+    "created_at": "2024-01-15 19:00:00",
+    "updated_at": "2024-01-15 19:25:00",
+    "notes": "Ponto da carne: mal passado"
+  },
+  {
+    "id": 3,
+    "restaurant_id": 3,
+    "customer_name": "Carlos Oliveira",
+    "customer_phone": "(11) 77777-3333",
+    "items": [
+      {
+        "dish_id": 11,
+        "dish_name": "Combo Sashimi",
+        "quantity": 1,
+        "unit_price": 45.90,
+        "total_price": 45.90
+      },
+      {
+        "dish_id": 12,
+        "dish_name": "Temaki Salmão",
+        "quantity": 2,
+        "unit_price": 18.90,
+        "total_price": 37.80
+      }
+    ],
+    "subtotal": 83.70,
+    "tax": 8.37,
+    "total": 92.07,
+    "status": "preparing",
+    "payment_method": "debit_card",
+    "created_at": "2024-01-15 19:15:00",
+    "updated_at": "2024-01-15 19:20:00",
+    "notes": "Sem wasabi"
+  },
+  {
+    "id": 4,
+    "restaurant_id": 4,
+    "customer_name": "Ana Costa",
+    "customer_phone": "(11) 66666-4444",
+    "items": [
+      {
+        "dish_id": 16,
+        "dish_name": "Cappuccino Especial",
+        "quantity": 2,
+        "unit_price": 8.90,
+        "total_price": 17.80
+      },
+      {
+        "dish_id": 17,
+        "dish_name": "Croissant Integral",
+        "quantity": 1,
+        "unit_price": 6.50,
+        "total_price": 6.50
+      }
+    ],
+    "subtotal": 24.30,
+    "tax": 2.43,
+    "total": 26.73,
+    "status": "pending",
+    "payment_method": "cash",
+    "created_at": "2024-01-15 19:30:00",
+    "updated_at": "2024-01-15 19:30:00",
+    "notes": "Para viagem"
+  },
+  {
+    "id": 5,
+    "restaurant_id": 5,
+    "customer_name": "Pedro Lima",
+    "customer_phone": "(11) 55555-5555",
+    "items": [
+      {
+        "dish_id": 21,
+        "dish_name": "Taco Carnitas",
+        "quantity": 3,
+        "unit_price": 15.90,
+        "total_price": 47.70
+      },
+      {
+        "dish_id": 22,
+        "dish_name": "Guacamole",
+        "quantity": 1,
+        "unit_price": 12.90,
+        "total_price": 12.90
+      }
+    ],
+    "subtotal": 60.60,
+    "tax": 6.06,
+    "total": 66.66,
+    "status": "preparing",
+    "payment_method": "credit_card",
+    "created_at": "2024-01-15 19:45:00",
+    "updated_at": "2024-01-15 19:50:00",
+    "notes": "Extra picante"
+  },
+  {
+    "id": 6,
+    "restaurant_id": 1,
+    "customer_name": "Lucia Ferreira",
+    "customer_phone": "(11) 44444-6666",
+    "items": [
+      {
+        "dish_id": 3,
+        "dish_name": "Pizza Pepperoni",
+        "quantity": 1,
+        "unit_price": 39.90,
+        "total_price": 39.90
+      }
+    ],
+    "subtotal": 39.90,
+    "tax": 3.99,
+    "total": 43.89,
+    "status": "cancelled",
+    "payment_method": "pix",
+    "created_at": "2024-01-15 18:00:00",
+    "updated_at": "2024-01-15 18:05:00",
+    "notes": "Cliente cancelou - problema no pagamento"
+  },
+  {
+    "id": 7,
+    "restaurant_id": 2,
+    "customer_name": "Roberto Alves",
+    "customer_phone": "(11) 33333-7777",
+    "items": [
+      {
+        "dish_id": 8,
+        "dish_name": "Burger Bacon",
+        "quantity": 1,
+        "unit_price": 32.90,
+        "total_price": 32.90
+      },
+      {
+        "dish_id": 9,
+        "dish_name": "Onion Rings",
+        "quantity": 1,
+        "unit_price": 14.90,
+        "total_price": 14.90
+      },
+      {
+        "dish_id": 10,
+        "dish_name": "Milkshake Chocolate",
+        "quantity": 1,
+        "unit_price": 16.90,
+        "total_price": 16.90
+      }
+    ],
+    "subtotal": 64.70,
+    "tax": 6.47,
+    "total": 71.17,
+    "status": "ready",
+    "payment_method": "debit_card",
+    "created_at": "2024-01-15 20:00:00",
+    "updated_at": "2024-01-15 20:20:00",
+    "notes": "Combo completo"
+  },
+  {
+    "id": 8,
+    "restaurant_id": 3,
+    "customer_name": "Fernanda Souza",
+    "customer_phone": "(11) 22222-8888",
+    "items": [
+      {
+        "dish_id": 13,
+        "dish_name": "Uramaki Filadélfia",
+        "quantity": 2,
+        "unit_price": 24.90,
+        "total_price": 49.80
+      },
+      {
+        "dish_id": 14,
+        "dish_name": "Yakisoba",
+        "quantity": 1,
+        "unit_price": 28.90,
+        "total_price": 28.90
+      }
+    ],
+    "subtotal": 78.70,
+    "tax": 7.87,
+    "total": 86.57,
+    "status": "delivered",
+    "payment_method": "credit_card",
+    "created_at": "2024-01-15 17:30:00",
+    "updated_at": "2024-01-15 18:30:00",
+    "notes": "Entrega rápida - cliente satisfeito"
+  }
+]

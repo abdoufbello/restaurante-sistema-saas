@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio - Prato Rápido SaaS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="assets/css/prato-rapido-theme.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1E1E1E;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+        
+        .sidebar {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);
+        }
+        
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 0.75rem 1rem;
+            margin: 0.25rem 0;
+            border-radius: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .main-content {
+            background-color: #F5F5F5;
+            min-height: 100vh;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);
+            border: none;
+            border-radius: 10px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 0, 0.3);
+        }
+        
+        .saas-badge {
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .plan-info {
+            background: #E8F4FD;
+            border: 1px solid #B3D9F2;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .dish-card {
+            transition: all 0.3s;
+            height: 100%;
+        }
+        
+        .dish-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .dish-image {
+            height: 200px;
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+        
+        .category-badge {
+            font-size: 0.75rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+        }
+        
+        .price-tag {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #FF6B00;
+        }
+        
+        .filter-tabs .nav-link {
+            border: none;
+            color: #666;
+            background: transparent;
+            border-radius: 25px;
+            padding: 0.5rem 1.5rem;
+            margin: 0 0.25rem;
+        }
+        
+        .filter-tabs .nav-link.active {
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);
+            color: white;
+        }
+        
+        .availability-toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        
+        .unavailable {
+            opacity: 0.6;
+            position: relative;
+        }
+        
+        .unavailable::after {
+            content: 'INDISPONÍVEL';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(220, 53, 69, 0.9);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar p-3">
+                <div class="text-center mb-4">
+                    <i class="fas fa-utensils text-white" style="font-size: 2.5rem;"></i>
+                    <h4 class="text-white mt-2">Prato Rápido</h4>
+                    <span class="saas-badge">SaaS Platform</span>
+                </div>
+                
+                <div class="plan-info text-center">
+                    <h6 class="text-primary mb-1">Plano Professional</h6>
+                    <small class="text-muted">R$ 199/mês</small>
+                </div>
+                
+                <nav class="nav flex-column">
+                    <a class="nav-link" href="dashboard.html">
+                        <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                    </a>
+                    <a class="nav-link" href="kiosk.html">
+                        <i class="fas fa-desktop me-2"></i>Totem Self-Service
+                    </a>
+                    <a class="nav-link" href="orders.html">
+                        <i class="fas fa-shopping-cart me-2"></i>Pedidos
+                    </a>
+                    <a class="nav-link active" href="#">
+                        <i class="fas fa-utensils me-2"></i>Cardápio
+                    </a>
+                    <a class="nav-link" href="reports.html">
+                        <i class="fas fa-chart-bar me-2"></i>Relatórios
+                    </a>
+                    <a class="nav-link" href="plans.html">
+                        <i class="fas fa-credit-card me-2"></i>Planos & Cobrança
+                    </a>
+                    <hr class="text-white-50">
+                    <a class="nav-link" href="settings.html">
+                        <i class="fas fa-cog me-2"></i>Configurações
+                    </a>
+                    <a class="nav-link" href="privacy.html">
+                        <i class="fas fa-shield-alt me-2"></i>LGPD & Privacidade
+                    </a>
+                    <a class="nav-link" href="login.html">
+                        <i class="fas fa-sign-out-alt me-2"></i>Sair
+                    </a>
+                </nav>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 main-content p-4">
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h1>Gerenciamento de Cardápio</h1>
+                        <p class="text-muted mb-0">Gerencie pratos, preços e disponibilidade</p>
+                    </div>
+                    <div>
+                        <button class="btn btn-success me-2" onclick="addDish()">
+                            <i class="fas fa-plus me-1"></i>Novo Prato
+                        </button>
+                        <button class="btn btn-outline-primary" onclick="exportMenu()">
+                            <i class="fas fa-download me-1"></i>Exportar
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Stats Cards -->
+                <div class="row mb-4">
+                    <div class="col-md-3 mb-3">
+                        <div class="card text-center p-3">
+                            <i class="fas fa-utensils text-primary" style="font-size: 2rem;"></i>
+                            <h3 class="mt-2 mb-1" id="totalDishes">24</h3>
+                            <p class="text-muted mb-0">Total de Pratos</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card text-center p-3">
+                            <i class="fas fa-check-circle text-success" style="font-size: 2rem;"></i>
+                            <h3 class="mt-2 mb-1" id="availableDishes">21</h3>
+                            <p class="text-muted mb-0">Disponíveis</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card text-center p-3">
+                            <i class="fas fa-star text-warning" style="font-size: 2rem;"></i>
+                            <h3 class="mt-2 mb-1" id="popularDishes">8</h3>
+                            <p class="text-muted mb-0">Mais Vendidos</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card text-center p-3">
+                            <i class="fas fa-dollar-sign text-info" style="font-size: 2rem;"></i>
+                            <h3 class="mt-2 mb-1">R$ 35</h3>
+                            <p class="text-muted mb-0">Preço Médio</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Filter Tabs -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <ul class="nav nav-pills filter-tabs justify-content-center" id="categoryTabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-filter="all" href="#">Todos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-filter="entradas" href="#">Entradas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-filter="pratos-principais" href="#">Pratos Principais</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-filter="sobremesas" href="#">Sobremesas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-filter="bebidas" href="#">Bebidas</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Search Bar -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                    <input type="text" class="form-control" id="searchInput" placeholder="Buscar pratos...">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-select" id="sortSelect">
+                                    <option value="name">Ordenar por Nome</option>
+                                    <option value="price">Ordenar por Preço</option>
+                                    <option value="category">Ordenar por Categoria</option>
+                                    <option value="popularity">Ordenar por Popularidade</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="showUnavailable" checked>
+                                    <label class="form-check-label" for="showUnavailable">
+                                        Mostrar Indisponíveis
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Dishes Grid -->
+                <div id="dishesGrid" class="row">
+                    <!-- Dishes will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dish Modal -->
+    <div class="modal fade" id="dishModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="dishModalTitle">Novo Prato</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="dishForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Nome do Prato</label>
+                                    <input type="text" class="form-control" id="dishName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Categoria</label>
+                                    <select class="form-select" id="dishCategory" required>
+                                        <option value="">Selecione uma categoria</option>
+                                        <option value="entradas">Entradas</option>
+                                        <option value="pratos-principais">Pratos Principais</option>
+                                        <option value="sobremesas">Sobremesas</option>
+                                        <option value="bebidas">Bebidas</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Preço (R$)</label>
+                                    <input type="number" class="form-control" id="dishPrice" step="0.01" min="0" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Descrição</label>
+                                    <textarea class="form-control" id="dishDescription" rows="3"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Ingredientes</label>
+                                    <textarea class="form-control" id="dishIngredients" rows="3" placeholder="Liste os ingredientes separados por vírgula"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="dishAvailable" checked>
+                                        <label class="form-check-label" for="dishAvailable">
+                                            Disponível
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="saveDish()">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Dados simulados de pratos
+        let dishes = [
+            {
+                id: 1,
+                name: 'Hambúrguer Artesanal',
+                category: 'pratos-principais',
+                price: 32.90,
+                description: 'Hambúrguer artesanal com carne bovina, queijo, alface e tomate',
+                ingredients: 'Pão brioche, carne bovina, queijo cheddar, alface, tomate, cebola',
+                available: true,
+                popularity: 95,
+                icon: 'fas fa-hamburger'
+            },
+            {
+                id: 2,
+                name: 'Pizza Margherita',
+                category: 'pratos-principais',
+                price: 38.50,
+                description: 'Pizza tradicional com molho de tomate, mussarela e manjericão',
+                ingredients: 'Massa de pizza, molho de tomate, mussarela, manjericão, azeite',
+                available: true,
+                popularity: 88,
+                icon: 'fas fa-pizza-slice'
+            },
+            {
+                id: 3,
+                name: 'Lasanha Bolonhesa',
+                category: 'pratos-principais',
+                price: 29.90,
+                description: 'Lasanha tradicional com molho bolonhesa e queijo',
+                ingredients: 'Massa de lasanha, carne moída, molho de tomate, queijo, bechamel',
+                available: true,
+                popularity: 82,
+                icon: 'fas fa-layer-group'
+            },
+            {
+                id: 4,
+                name: 'Salada Caesar',
+                category: 'entradas',
+                price: 24.90,
+                description: 'Salada fresca com alface, croutons e molho caesar',
+                ingredients: 'Alface romana, croutons, parmesão, molho caesar, frango grelhado',
+                available: true,
+                popularity: 75,
+                icon: 'fas fa-leaf'
+            },
+            {
+                id: 5,
+                name: 'Tiramisu',
+                category: 'sobremesas',
+                price: 18.90,
+                description: 'Sobremesa italiana com café e mascarpone',
+                ingredients: 'Biscoito champagne, café, mascarpone, ovos, açúcar, cacau',
+                available: true,
+                popularity: 70,
+                icon: 'fas fa-birthday-cake'
+            },
+            {
+                id: 6,
+                name: 'Refrigerante',
+                category: 'bebidas',
+                price: 6.90,
+                description: 'Refrigerante gelado 350ml',
+                ingredients: 'Refrigerante cola, limão ou laranja',
+                available: true,
+                popularity: 90,
+                icon: 'fas fa-glass-whiskey'
+            },
+            {
+                id: 7,
+                name: 'Suco Natural',
+                category: 'bebidas',
+                price: 8.90,
+                description: 'Suco natural de frutas da estação',
+                ingredients: 'Frutas frescas, água, açúcar (opcional)',
+                available: false,
+                popularity: 65,
+                icon: 'fas fa-glass-whiskey'
+            },
+            {
+                id: 8,
+                name: 'Bruschetta',
+                category: 'entradas',
+                price: 16.90,
+                description: 'Pão italiano com tomate, manjericão e azeite',
+                ingredients: 'Pão italiano, tomate, manjericão, alho, azeite, sal',
+                available: true,
+                popularity: 68,
+                icon: 'fas fa-bread-slice'
+            }
+        ];
+        
+        let currentFilter = 'all';
+        let currentSort = 'name';
+        let searchTerm = '';
+        let showUnavailable = true;
+        let editingDishId = null;
+        
+        // Função para obter classe CSS da categoria
+        function getCategoryClass(category) {
+            const classes = {
+                'entradas': 'bg-success',
+                'pratos-principais': 'bg-primary',
+                'sobremesas': 'bg-warning',
+                'bebidas': 'bg-info'
+            };
+            return classes[category] || 'bg-secondary';
+        }
+        
+        // Função para obter nome da categoria
+        function getCategoryName(category) {
+            const names = {
+                'entradas': 'Entradas',
+                'pratos-principais': 'Pratos Principais',
+                'sobremesas': 'Sobremesas',
+                'bebidas': 'Bebidas'
+            };
+            return names[category] || 'Outros';
+        }
+        
+        // Função para filtrar e ordenar pratos
+        function getFilteredDishes() {
+            let filtered = dishes.filter(dish => {
+                // Filtro por categoria
+                if (currentFilter !== 'all' && dish.category !== currentFilter) {
+                    return false;
+                }
+                
+                // Filtro por disponibilidade
+                if (!showUnavailable && !dish.available) {
+                    return false;
+                }
+                
+                // Filtro por busca
+                if (searchTerm && !dish.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return false;
+                }
+                
+                return true;
+            });
+            
+            // Ordenação
+            filtered.sort((a, b) => {
+                switch (currentSort) {
+                    case 'price':
+                        return a.price - b.price;
+                    case 'category':
+                        return a.category.localeCompare(b.category);
+                    case 'popularity':
+                        return b.popularity - a.popularity;
+                    default:
+                        return a.name.localeCompare(b.name);
+                }
+            });
+            
+            return filtered;
+        }
+        
+        // Função para renderizar pratos
+        function renderDishes() {
+            const container = document.getElementById('dishesGrid');
+            const filteredDishes = getFilteredDishes();
+            
+            if (filteredDishes.length === 0) {
+                container.innerHTML = `
+                    <div class="col-12">
+                        <div class="card text-center p-5">
+                            <i class="fas fa-search text-muted" style="font-size: 3rem;"></i>
+                            <h5 class="text-muted mt-3">Nenhum prato encontrado</h5>
+                            <p class="text-muted">Tente ajustar os filtros ou adicionar novos pratos.</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = filteredDishes.map(dish => `
+                <div class="col-md-6 col-lg-4 col-xl-3 mb-4">
+                    <div class="card dish-card ${!dish.available ? 'unavailable' : ''}">
+                        <div class="dish-image">
+                            <i class="${dish.icon}"></i>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h6 class="card-title mb-0">${dish.name}</h6>
+                                <div class="form-check form-switch availability-toggle">
+                                    <input class="form-check-input" type="checkbox" ${dish.available ? 'checked' : ''} 
+                                           onchange="toggleAvailability(${dish.id})">
+                                </div>
+                            </div>
+                            <span class="badge category-badge ${getCategoryClass(dish.category)} mb-2">
+                                ${getCategoryName(dish.category)}
+                            </span>
+                            <p class="card-text small text-muted mb-2">${dish.description}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="price-tag">R$ ${dish.price.toFixed(2).replace('.', ',')}</span>
+                                <div>
+                                    <button class="btn btn-outline-primary btn-sm me-1" onclick="editDish(${dish.id})">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-outline-danger btn-sm" onclick="deleteDish(${dish.id})">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="mt-2">
+                                <small class="text-muted">
+                                    <i class="fas fa-star text-warning"></i> ${dish.popularity}% popularidade
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Função para atualizar estatísticas
+        function updateStats() {
+            document.getElementById('totalDishes').textContent = dishes.length;
+            document.getElementById('availableDishes').textContent = dishes.filter(d => d.available).length;
+            document.getElementById('popularDishes').textContent = dishes.filter(d => d.popularity >= 80).length;
+        }
+        
+        // Função para alternar disponibilidade
+        function toggleAvailability(dishId) {
+            const dishIndex = dishes.findIndex(d => d.id === dishId);
+            if (dishIndex !== -1) {
+                dishes[dishIndex].available = !dishes[dishIndex].available;
+                renderDishes();
+                updateStats();
+                showNotification(`Disponibilidade do prato atualizada`, 'success');
+            }
+        }
+        
+        // Função para adicionar novo prato
+        function addDish() {
+            editingDishId = null;
+            document.getElementById('dishModalTitle').textContent = 'Novo Prato';
+            document.getElementById('dishForm').reset();
+            document.getElementById('dishAvailable').checked = true;
+            new bootstrap.Modal(document.getElementById('dishModal')).show();
+        }
+        
+        // Função para editar prato
+        function editDish(dishId) {
+            const dish = dishes.find(d => d.id === dishId);
+            if (!dish) return;
+            
+            editingDishId = dishId;
+            document.getElementById('dishModalTitle').textContent = 'Editar Prato';
+            document.getElementById('dishName').value = dish.name;
+            document.getElementById('dishCategory').value = dish.category;
+            document.getElementById('dishPrice').value = dish.price;
+            document.getElementById('dishDescription').value = dish.description;
+            document.getElementById('dishIngredients').value = dish.ingredients;
+            document.getElementById('dishAvailable').checked = dish.available;
+            
+            new bootstrap.Modal(document.getElementById('dishModal')).show();
+        }
+        
+        // Função para salvar prato
+        function saveDish() {
+            const form = document.getElementById('dishForm');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            
+            const dishData = {
+                name: document.getElementById('dishName').value,
+                category: document.getElementById('dishCategory').value,
+                price: parseFloat(document.getElementById('dishPrice').value),
+                description: document.getElementById('dishDescription').value,
+                ingredients: document.getElementById('dishIngredients').value,
+                available: document.getElementById('dishAvailable').checked
+            };
+            
+            if (editingDishId) {
+                // Editar prato existente
+                const dishIndex = dishes.findIndex(d => d.id === editingDishId);
+                if (dishIndex !== -1) {
+                    dishes[dishIndex] = { ...dishes[dishIndex], ...dishData };
+                    showNotification('Prato atualizado com sucesso', 'success');
+                }
+            } else {
+                // Adicionar novo prato
+                const newDish = {
+                    id: Math.max(...dishes.map(d => d.id)) + 1,
+                    ...dishData,
+                    popularity: Math.floor(Math.random() * 40) + 60,
+                    icon: 'fas fa-utensils'
+                };
+                dishes.push(newDish);
+                showNotification('Prato adicionado com sucesso', 'success');
+            }
+            
+            renderDishes();
+            updateStats();
+            bootstrap.Modal.getInstance(document.getElementById('dishModal')).hide();
+        }
+        
+        // Função para deletar prato
+        function deleteDish(dishId) {
+            if (confirm('Tem certeza que deseja excluir este prato?')) {
+                dishes = dishes.filter(d => d.id !== dishId);
+                renderDishes();
+                updateStats();
+                showNotification('Prato excluído com sucesso', 'warning');
+            }
+        }
+        
+        // Função para exportar cardápio
+        function exportMenu() {
+            showNotification('Exportação do cardápio iniciada', 'info');
+            setTimeout(() => {
+                showNotification('Cardápio exportado com sucesso', 'success');
+            }, 2000);
+        }
+        
+        // Função para mostrar notificações
+        function showNotification(message, type) {
+            const alertClass = {
+                'success': 'alert-success',
+                'warning': 'alert-warning',
+                'info': 'alert-info',
+                'danger': 'alert-danger'
+            }[type] || 'alert-info';
+            
+            const notification = document.createElement('div');
+            notification.className = `alert ${alertClass} alert-dismissible fade show position-fixed`;
+            notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+            notification.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 5000);
+        }
+        
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configurar filtros de categoria
+            document.querySelectorAll('.filter-tabs .nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    document.querySelectorAll('.filter-tabs .nav-link').forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    currentFilter = this.getAttribute('data-filter');
+                    renderDishes();
+                });
+            });
+            
+            // Configurar busca
+            document.getElementById('searchInput').addEventListener('input', function() {
+                searchTerm = this.value;
+                renderDishes();
+            });
+            
+            // Configurar ordenação
+            document.getElementById('sortSelect').addEventListener('change', function() {
+                currentSort = this.value;
+                renderDishes();
+            });
+            
+            // Configurar toggle de indisponíveis
+            document.getElementById('showUnavailable').addEventListener('change', function() {
+                showUnavailable = this.checked;
+                renderDishes();
+            });
+            
+            // Renderizar pratos iniciais
+            renderDishes();
+            updateStats();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo - Sistema SaaS Totem de Autoatendimento</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 0;
+        }
+        .feature-card {
+            transition: transform 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        .pricing-card {
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        .pricing-card:hover {
+            border-color: #007bff;
+            transform: translateY(-5px);
+        }
+        .pricing-card.featured {
+            border-color: #28a745;
+            transform: scale(1.05);
+        }
+        .status-badge {
+            font-size: 0.8rem;
+            padding: 0.25rem 0.5rem;
+        }
+        .demo-section {
+            padding: 60px 0;
+        }
+        .analytics-card {
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-utensils"></i> Prato Rápido SaaS
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Funcionalidades</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#pricing">Planos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#demo">Demo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#analytics">Analytics</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold mb-4">Sistema SaaS Completo para Totems de Autoatendimento</h1>
+                    <p class="lead mb-4">Plataforma multi-tenant com assinaturas, analytics avançado, compliance LGPD e muito mais!</p>
+                    <div class="d-flex gap-3">
+                        <a href="#demo" class="btn btn-light btn-lg">
+                            <i class="fas fa-play"></i> Ver Demo
+                        </a>
+                        <a href="#pricing" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-rocket"></i> Começar Agora
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="text-center">
+                        <i class="fas fa-desktop" style="font-size: 200px; opacity: 0.3;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="demo-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2 class="display-5 fw-bold">Funcionalidades Implementadas</h2>
+                    <p class="lead text-muted">Sistema completo com todas as funcionalidades SaaS essenciais</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-database fa-3x text-primary mb-3"></i>
+                            <h5 class="card-title">Multi-Tenancy</h5>
+                            <p class="card-text">Isolamento completo de dados por restaurante com arquitetura multi-tenant segura.</p>
+                            <span class="badge bg-success status-badge">✓ Implementado</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-credit-card fa-3x text-success mb-3"></i>
+                            <h5 class="card-title">Sistema de Assinaturas</h5>
+                            <p class="card-text">Planos Starter, Professional e Enterprise com cobrança recorrente automática.</p>
+                            <span class="badge bg-success status-badge">✓ Implementado</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-gift fa-3x text-warning mb-3"></i>
+                            <h5 class="card-title">Trial Gratuito</h5>
+                            <p class="card-text">30 dias de trial gratuito com onboarding automático e dados de exemplo.</p>
+                            <span class="badge bg-success status-badge">✓ Implementado</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-shield-alt fa-3x text-danger mb-3"></i>
+                            <h5 class="card-title">Segurança LGPD</h5>
+                            <p class="card-text">Compliance total com LGPD, criptografia de dados e auditoria completa.</p>
+                            <span class="badge bg-success status-badge">✓ Implementado</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-chart-line fa-3x text-info mb-3"></i>
+                            <h5 class="card-title">Analytics Avançado</h5>
+                            <p class="card-text">Dashboard completo com métricas de vendas, clientes e relatórios financeiros.</p>
+                            <span class="badge bg-success status-badge">✓ Implementado</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-limit fa-3x text-secondary mb-3"></i>
+                            <h5 class="card-title">Controle de Limites</h5>
+                            <p class="card-text">Middleware para controlar limites por plano (totems, pedidos/mês).</p>
+                            <span class="badge bg-success status-badge">✓ Implementado</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="demo-section bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2 class="display-5 fw-bold">Planos de Assinatura</h2>
+                    <p class="lead text-muted">Escolha o plano ideal para seu restaurante</p>
+                </div>
+            </div>
+            <div class="row g-4 justify-content-center">
+                <div class="col-lg-4 col-md-6">
+                    <div class="card pricing-card h-100">
+                        <div class="card-header text-center bg-primary text-white">
+                            <h4>Starter</h4>
+                            <h2>R$ 99<small>/mês</small></h2>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success"></i> 1 Totem</li>
+                                <li><i class="fas fa-check text-success"></i> 500 pedidos/mês</li>
+                                <li><i class="fas fa-check text-success"></i> Relatórios básicos</li>
+                                <li><i class="fas fa-check text-success"></i> Suporte por email</li>
+                                <li><i class="fas fa-check text-success"></i> Trial 30 dias</li>
+                            </ul>
+                        </div>
+                        <div class="card-footer text-center">
+                            <button class="btn btn-primary btn-lg w-100">Começar Trial</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card pricing-card featured h-100">
+                        <div class="card-header text-center bg-success text-white">
+                            <h4>Professional <span class="badge bg-warning">Popular</span></h4>
+                            <h2>R$ 199<small>/mês</small></h2>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success"></i> 3 Totems</li>
+                                <li><i class="fas fa-check text-success"></i> 2.000 pedidos/mês</li>
+                                <li><i class="fas fa-check text-success"></i> Analytics avançado</li>
+                                <li><i class="fas fa-check text-success"></i> Suporte prioritário</li>
+                                <li><i class="fas fa-check text-success"></i> Integração POS</li>
+                                <li><i class="fas fa-check text-success"></i> Trial 30 dias</li>
+                            </ul>
+                        </div>
+                        <div class="card-footer text-center">
+                            <button class="btn btn-success btn-lg w-100">Começar Trial</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card pricing-card h-100">
+                        <div class="card-header text-center bg-dark text-white">
+                            <h4>Enterprise</h4>
+                            <h2>R$ 399<small>/mês</small></h2>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success"></i> Totems ilimitados</li>
+                                <li><i class="fas fa-check text-success"></i> Pedidos ilimitados</li>
+                                <li><i class="fas fa-check text-success"></i> BI personalizado</li>
+                                <li><i class="fas fa-check text-success"></i> Suporte 24/7</li>
+                                <li><i class="fas fa-check text-success"></i> API completa</li>
+                                <li><i class="fas fa-check text-success"></i> Trial 30 dias</li>
+                            </ul>
+                        </div>
+                        <div class="card-footer text-center">
+                            <button class="btn btn-dark btn-lg w-100">Começar Trial</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="demo-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2 class="display-5 fw-bold">Demonstração das Funcionalidades</h2>
+                    <p class="lead text-muted">Explore as principais telas do sistema</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h5><i class="fas fa-tachometer-alt"></i> Dashboard Principal</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Acesse o dashboard principal do sistema:</p>
+                            <a href="dashboard.php" class="btn btn-primary" target="_blank">
+                                <i class="fas fa-external-link-alt"></i> Abrir Dashboard
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-success text-white">
+                            <h5><i class="fas fa-desktop"></i> Totem de Autoatendimento</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Experimente a interface do totem:</p>
+                            <a href="kiosk.php" class="btn btn-success" target="_blank">
+                                <i class="fas fa-external-link-alt"></i> Abrir Totem
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-info text-white">
+                            <h5><i class="fas fa-chart-bar"></i> Relatórios</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Visualize relatórios e métricas:</p>
+                            <a href="reports.php" class="btn btn-info" target="_blank">
+                                <i class="fas fa-external-link-alt"></i> Ver Relatórios
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-warning text-white">
+                            <h5><i class="fas fa-credit-card"></i> Planos e Assinaturas</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Gerencie planos e assinaturas:</p>
+                            <a href="plans.php" class="btn btn-warning" target="_blank">
+                                <i class="fas fa-external-link-alt"></i> Ver Planos
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Analytics Preview -->
+    <section id="analytics" class="demo-section bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2 class="display-5 fw-bold">Analytics em Tempo Real</h2>
+                    <p class="lead text-muted">Métricas e insights para seu negócio</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-xl-3 col-md-6">
+                    <div class="card analytics-card border-left-primary">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        Pedidos Hoje
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                        <span id="today-orders">127</span>
+                                        <span class="badge bg-success ms-2">
+                                            <i class="fas fa-arrow-up"></i> 12%
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-shopping-cart fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card analytics-card border-left-success">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                        Receita Hoje
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                        R$ <span id="today-revenue">3.247,50</span>
+                                        <span class="badge bg-success ms-2">
+                                            <i class="fas fa-arrow-up"></i> 8%
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card analytics-card border-left-warning">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                        Ticket Médio
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                        R$ <span id="avg-ticket">25,57</span>
+                                        <span class="badge bg-warning ms-2">
+                                            <i class="fas fa-arrow-up"></i> 3%
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-chart-line fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card analytics-card border-left-info">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                        Clientes Ativos
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                        <span id="active-customers">1.234</span>
+                                        <span class="badge bg-info ms-2">
+                                            <i class="fas fa-arrow-up"></i> 15%
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-users fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Architecture Overview -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header bg-dark text-white">
+                            <h5><i class="fas fa-code"></i> Arquitetura Implementada</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6><i class="fas fa-database"></i> Backend (CodeIgniter 4)</h6>
+                                    <ul class="list-unstyled">
+                                        <li>✓ <strong>Models:</strong> Restaurant, Subscription, Plan, User</li>
+                                        <li>✓ <strong>Services:</strong> Billing, Notification, Security, Analytics</li>
+                                        <li>✓ <strong>Controllers:</strong> Subscription, Privacy, Analytics</li>
+                                        <li>✓ <strong>Migrations:</strong> 15+ tabelas estruturadas</li>
+                                        <li>✓ <strong>Commands:</strong> ProcessSubscriptions CLI</li>
+                                        <li>✓ <strong>Filters:</strong> Security, Usage Limits</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6><i class="fas fa-shield-alt"></i> Segurança & Compliance</h6>
+                                    <ul class="list-unstyled">
+                                        <li>✓ <strong>LGPD:</strong> Consentimentos, Exportação, Exclusão</li>
+                                        <li>✓ <strong>Criptografia:</strong> Dados sensíveis protegidos</li>
+                                        <li>✓ <strong>Auditoria:</strong> Logs de todas as ações</li>
+                                        <li>✓ <strong>Rate Limiting:</strong> Proteção contra ataques</li>
+                                        <li>✓ <strong>Session Security:</strong> Fingerprinting, Timeout</li>
+                                        <li>✓ <strong>Headers:</strong> CSP, X-Frame-Options, HSTS</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-utensils"></i> Prato Rápido SaaS</h5>
+                    <p>Sistema completo de totem de autoatendimento com arquitetura SaaS escalável.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <h6>Status do Sistema</h6>
+                    <p>
+                        <span class="badge bg-success">✓ Multi-Tenancy</span>
+                        <span class="badge bg-success">✓ Assinaturas</span>
+                        <span class="badge bg-success">✓ LGPD</span>
+                        <span class="badge bg-success">✓ Analytics</span>
+                    </p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p>&copy; 2024 Prato Rápido SaaS. Todos os direitos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Simulate real-time data updates
+        function updateMetrics() {
+            const orders = document.getElementById('today-orders');
+            const revenue = document.getElementById('today-revenue');
+            const avgTicket = document.getElementById('avg-ticket');
+            const customers = document.getElementById('active-customers');
+            
+            // Simulate random updates
+            if (orders) {
+                const currentOrders = parseInt(orders.textContent);
+                orders.textContent = currentOrders + Math.floor(Math.random() * 3);
+            }
+            
+            if (revenue) {
+                const currentRevenue = parseFloat(revenue.textContent.replace('.', '').replace(',', '.'));
+                const newRevenue = currentRevenue + (Math.random() * 50);
+                revenue.textContent = newRevenue.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+            }
+        }
+        
+        // Update metrics every 5 seconds
+        setInterval(updateMetrics, 5000);
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

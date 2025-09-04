@@ -1,0 +1,81 @@
+# Configuração do Traefik para Prato Rápido SaaS
+
+# API e Dashboard
+api:
+  dashboard: true
+  insecure: false
+  debug: false
+
+# Entry Points
+entryPoints:
+  web:
+    address: ":80"
+    http:
+      redirections:
+        entrypoint:
+          to: websecure
+          scheme: https
+          permanent: true
+  websecure:
+    address: ":443"
+    http:
+      tls:
+        certResolver: letsencrypt
+
+# Providers
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: false
+    network: web
+  file:
+    filename: /etc/traefik/dynamic.yml
+    watch: true
+
+# Certificate Resolvers
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      email: admin@seudominio.com  # ALTERE ESTE EMAIL
+      storage: /acme.json
+      keyType: EC256
+      httpChallenge:
+        entryPoint: web
+      # Uncomment for staging/testing
+      # caServer: https://acme-staging-v02.api.letsencrypt.org/directory
+
+# Global Configuration
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+
+# Logging
+log:
+  level: INFO
+  filePath: "/var/log/traefik.log"
+  format: json
+
+accessLog:
+  filePath: "/var/log/access.log"
+  format: json
+  bufferingSize: 100
+  filters:
+    statusCodes:
+      - "400-499"
+      - "500-599"
+
+# Metrics (opcional)
+metrics:
+  prometheus:
+    addEntryPointsLabels: true
+    addServicesLabels: true
+
+# Pilot (opcional - para monitoramento)
+# pilot:
+#   token: "your-pilot-token"
+
+# Tracing (opcional)
+# tracing:
+#   jaeger:
+#     samplingServerURL: http://jaeger:14268/api/sampling
+#     localAgentHostPort: jaeger:6831

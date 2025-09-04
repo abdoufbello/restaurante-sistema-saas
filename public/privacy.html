@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LGPD & Privacidade - Prato Rápido SaaS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="assets/css/prato-rapido-theme.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1E1E1E;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+        
+        .sidebar {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);
+        }
+        
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 0.75rem 1rem;
+            margin: 0.25rem 0;
+            border-radius: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .main-content {
+            background-color: #F5F5F5;
+            min-height: 100vh;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);
+            border: none;
+            border-radius: 10px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 0, 0.3);
+        }
+        
+        .saas-badge {
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .privacy-nav {
+            background: white;
+            border-radius: 15px;
+            padding: 1rem;
+            position: sticky;
+            top: 20px;
+        }
+        
+        .privacy-nav .nav-link {
+            color: #666;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .privacy-nav .nav-link:hover,
+        .privacy-nav .nav-link.active {
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);
+            color: white;
+        }
+        
+        .privacy-content {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .lgpd-badge {
+            background: #28a745;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .compliance-item {
+            background: #f8f9fa;
+            border-left: 4px solid #28a745;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .data-category {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .data-category h6 {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+        
+        .rights-card {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #e1bee7;
+        }
+        
+        .rights-card h6 {
+            color: #4a148c;
+        }
+        
+        .contact-card {
+            background: linear-gradient(135deg, #e8f5e8 0%, #f0f8ff 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .contact-card .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.25rem;
+            top: 1.5rem;
+            width: 12px;
+            height: 12px;
+            background: #FF6B00;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px #FF6B00;
+        }
+        
+        .consent-form {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 2rem;
+        }
+        
+        .form-check-input:checked {
+            background-color: #FF6B00;
+            border-color: #FF6B00;
+        }
+        
+        .alert-lgpd {
+            background: linear-gradient(135deg, #fff3cd 0%, #d1ecf1 100%);
+            border: 1px solid #bee5eb;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .data-request-form {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            padding: 0.75rem 1rem;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: #FF6B00;
+            box-shadow: 0 0 0 0.2rem rgba(255, 107, 0, 0.25);
+        }
+        
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-approved {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .request-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #FF6B00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar p-3">
+                <div class="text-center mb-4">
+                    <i class="fas fa-utensils text-white" style="font-size: 2.5rem;"></i>
+                    <h4 class="text-white mt-2">Prato Rápido</h4>
+                    <span class="saas-badge">SaaS Platform</span>
+                </div>
+                
+                <nav class="nav flex-column">
+                    <a class="nav-link" href="dashboard.html">
+                        <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                    </a>
+                    <a class="nav-link" href="kiosk.html">
+                        <i class="fas fa-desktop me-2"></i>Totem Self-Service
+                    </a>
+                    <a class="nav-link" href="orders.html">
+                        <i class="fas fa-shopping-cart me-2"></i>Pedidos
+                    </a>
+                    <a class="nav-link" href="dishes.html">
+                        <i class="fas fa-utensils me-2"></i>Cardápio
+                    </a>
+                    <a class="nav-link" href="reports.html">
+                        <i class="fas fa-chart-bar me-2"></i>Relatórios
+                    </a>
+                    <a class="nav-link" href="plans.html">
+                        <i class="fas fa-credit-card me-2"></i>Planos & Cobrança
+                    </a>
+                    <hr class="text-white-50">
+                    <a class="nav-link" href="settings.html">
+                        <i class="fas fa-cog me-2"></i>Configurações
+                    </a>
+                    <a class="nav-link active" href="#">
+                        <i class="fas fa-shield-alt me-2"></i>LGPD & Privacidade
+                    </a>
+                    <a class="nav-link" href="login.html">
+                        <i class="fas fa-sign-out-alt me-2"></i>Sair
+                    </a>
+                </nav>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 main-content p-4">
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h1>LGPD & Privacidade</h1>
+                        <p class="text-muted mb-0">Proteção de dados e conformidade legal</p>
+                    </div>
+                    <div>
+                        <span class="lgpd-badge">
+                            <i class="fas fa-shield-alt me-2"></i>Conforme LGPD
+                        </span>
+                    </div>
+                </div>
+                
+                <!-- Alert LGPD -->
+                <div class="alert-lgpd">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-info-circle text-info me-3" style="font-size: 1.5rem;"></i>
+                        <div>
+                            <h6 class="mb-1">Compromisso com a Privacidade</h6>
+                            <p class="mb-0">O Prato Rápido SaaS está em total conformidade com a Lei Geral de Proteção de Dados (LGPD) e demais regulamentações de privacidade.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <!-- Privacy Navigation -->
+                    <div class="col-lg-3 mb-4">
+                        <div class="privacy-nav">
+                            <h6 class="mb-3">Seções</h6>
+                            <nav class="nav flex-column">
+                                <a class="nav-link active" href="#" onclick="showTab('overview')">
+                                    <i class="fas fa-eye me-2"></i>Visão Geral
+                                </a>
+                                <a class="nav-link" href="#" onclick="showTab('data-collection')">
+                                    <i class="fas fa-database me-2"></i>Coleta de Dados
+                                </a>
+                                <a class="nav-link" href="#" onclick="showTab('rights')">
+                                    <i class="fas fa-user-shield me-2"></i>Seus Direitos
+                                </a>
+                                <a class="nav-link" href="#" onclick="showTab('consent')">
+                                    <i class="fas fa-check-circle me-2"></i>Consentimentos
+                                </a>
+                                <a class="nav-link" href="#" onclick="showTab('requests')">
+                                    <i class="fas fa-file-alt me-2"></i>Solicitações
+                                </a>
+                                <a class="nav-link" href="#" onclick="showTab('security')">
+                                    <i class="fas fa-lock me-2"></i>Segurança
+                                </a>
+                                <a class="nav-link" href="#" onclick="showTab('contact')">
+                                    <i class="fas fa-envelope me-2"></i>Contato DPO
+                                </a>
+                            </nav>
+                        </div>
+                    </div>
+                    
+                    <!-- Privacy Content -->
+                    <div class="col-lg-9">
+                        <!-- Overview -->
+                        <div id="overview" class="tab-content active privacy-content">
+                            <h4 class="mb-4">Visão Geral da Privacidade</h4>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <div class="compliance-item">
+                                        <h6><i class="fas fa-gavel me-2"></i>Conformidade LGPD</h6>
+                                        <p class="mb-0">Nosso sistema está em total conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018).</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-4">
+                                    <div class="compliance-item">
+                                        <h6><i class="fas fa-globe me-2"></i>Padrões Internacionais</h6>
+                                        <p class="mb-0">Seguimos as melhores práticas internacionais de proteção de dados, incluindo GDPR.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-4">
+                                    <div class="compliance-item">
+                                        <h6><i class="fas fa-certificate me-2"></i>Certificações</h6>
+                                        <p class="mb-0">Possuímos certificações ISO 27001 e SOC 2 Type II para segurança da informação.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-4">
+                                    <div class="compliance-item">
+                                        <h6><i class="fas fa-user-graduate me-2"></i>Treinamento</h6>
+                                        <p class="mb-0">Nossa equipe recebe treinamento regular sobre proteção de dados e privacidade.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <hr class="my-4">
+                            
+                            <h5 class="mb-3">Princípios da LGPD que Seguimos</h5>
+                            
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <h6>Finalidade</h6>
+                                    <p class="mb-0">Coletamos dados apenas para finalidades específicas, explícitas e legítimas relacionadas ao funcionamento do restaurante.</p>
+                                </div>
+                                
+                                <div class="timeline-item">
+                                    <h6>Adequação</h6>
+                                    <p class="mb-0">O tratamento de dados é compatível com as finalidades informadas ao titular dos dados.</p>
+                                </div>
+                                
+                                <div class="timeline-item">
+                                    <h6>Necessidade</h6>
+                                    <p class="mb-0">Limitamos o tratamento ao mínimo necessário para a realização de suas finalidades.</p>
+                                </div>
+                                
+                                <div class="timeline-item">
+                                    <h6>Livre Acesso</h6>
+                                    <p class="mb-0">Garantimos consulta facilitada e gratuita sobre a forma e duração do tratamento.</p>
+                                </div>
+                                
+                                <div class="timeline-item">
+                                    <h6>Transparência</h6>
+                                    <p class="mb-0">Fornecemos informações claras, precisas e facilmente acessíveis sobre o tratamento.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Data Collection -->
+                        <div id="data-collection" class="tab-content privacy-content">
+                            <h4 class="mb-4">Coleta e Uso de Dados</h4>
+                            
+                            <div class="data-category">
+                                <h6><i class="fas fa-user me-2"></i>Dados Pessoais de Clientes</h6>
+                                <ul class="mb-0">
+                                    <li><strong>Nome completo:</strong> Para identificação do pedido</li>
+                                    <li><strong>Telefone:</strong> Para contato sobre o pedido</li>
+                                    <li><strong>Email:</strong> Para envio de confirmações e promoções (com consentimento)</li>
+                                    <li><strong>Endereço:</strong> Para entrega de pedidos</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="data-category">
+                                <h6><i class="fas fa-shopping-cart me-2"></i>Dados de Pedidos</h6>
+                                <ul class="mb-0">
+                                    <li><strong>Histórico de pedidos:</strong> Para melhorar a experiência do cliente</li>
+                                    <li><strong>Preferências alimentares:</strong> Para recomendações personalizadas</li>
+                                    <li><strong>Método de pagamento:</strong> Para processamento de transações</li>
+                                    <li><strong>Avaliações:</strong> Para melhoria contínua do serviço</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="data-category">
+                                <h6><i class="fas fa-chart-line me-2"></i>Dados de Uso</h6>
+                                <ul class="mb-0">
+                                    <li><strong>Logs de acesso:</strong> Para segurança e auditoria</li>
+                                    <li><strong>Dados de navegação:</strong> Para melhorar a interface</li>
+                                    <li><strong>Cookies técnicos:</strong> Para funcionamento do sistema</li>
+                                    <li><strong>Estatísticas de uso:</strong> Para análise de performance</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="data-category">
+                                <h6><i class="fas fa-users me-2"></i>Dados de Funcionários</h6>
+                                <ul class="mb-0">
+                                    <li><strong>Dados cadastrais:</strong> Para gestão de recursos humanos</li>
+                                    <li><strong>Dados de acesso:</strong> Para controle de permissões</li>
+                                    <li><strong>Registros de atividade:</strong> Para auditoria interna</li>
+                                    <li><strong>Dados de treinamento:</strong> Para capacitação em LGPD</li>
+                                </ul>
+                            </div>
+                            
+                            <hr class="my-4">
+                            
+                            <h5 class="mb-3">Base Legal para Tratamento</h5>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-handshake me-2 text-primary"></i>Execução de Contrato</h6>
+                                            <p class="card-text">Dados necessários para o cumprimento de contrato ou procedimentos preliminares relacionados a contrato.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-check-circle me-2 text-success"></i>Consentimento</h6>
+                                            <p class="card-text">Dados coletados mediante consentimento livre, informado e inequívoco do titular.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-balance-scale me-2 text-warning"></i>Interesse Legítimo</h6>
+                                            <p class="card-text">Para atender aos interesses legítimos do controlador ou de terceiro, respeitando os direitos do titular.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-gavel me-2 text-info"></i>Cumprimento Legal</h6>
+                                            <p class="card-text">Para o cumprimento de obrigação legal ou regulatória pelo controlador.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Rights -->
+                        <div id="rights" class="tab-content privacy-content">
+                            <h4 class="mb-4">Seus Direitos como Titular de Dados</h4>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <div class="rights-card">
+                                        <h6><i class="fas fa-info-circle me-2"></i>Confirmação e Acesso</h6>
+                                        <p class="mb-0">Confirmar a existência de tratamento e acessar seus dados pessoais.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-4">
+                                    <div class="rights-card">
+                                        <h6><i class="fas fa-edit me-2"></i>Correção</h6>
+                                        <p class="mb-0">Corrigir dados incompletos, inexatos ou desatualizados.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-4">
+                                    <div class="rights-card">
+                                        <h6><i class="fas fa-eye me-2"></i>Anonimização</h6>
+                                        <p class="mb-0">Solicitar a anonimização, bloqueio ou eliminação de dados desnecessários.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-4">
+                                    <div class="rights-card">
+                                        <h6><i class="fas fa-share me-2"></i>Portabilidade</h6>
+                                        <p class="mb-0">Solicitar a portabilidade dos dados a outro fornecedor de serviço.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-4">
+                                    <div class="rights-card">
+                                        <h6><i class="fas fa-trash me-2"></i>Eliminação</h6>
+                                        <p class="mb-0">Solicitar a eliminação dos dados pessoais tratados com base no consentimento.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-4">
+                                    <div class="rights-card">
+                                        <h6><i class="fas fa-ban me-2"></i>Oposição</h6>
+                                        <p class="mb-0">Opor-se ao tratamento realizado com base no interesse legítimo.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-4">
+                                    <div class="rights-card">
+                                        <h6><i class="fas fa-times-circle me-2"></i>Revogação</h6>
+                                        <p class="mb-0">Revogar o consentimento a qualquer momento.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-4">
+                                    <div class="rights-card">
+                                        <h6><i class="fas fa-robot me-2"></i>Decisão Automatizada</h6>
+                                        <p class="mb-0">Solicitar revisão de decisões tomadas unicamente com base em tratamento automatizado.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="alert alert-info">
+                                <h6><i class="fas fa-clock me-2"></i>Prazo de Resposta</h6>
+                                <p class="mb-0">Todas as solicitações relacionadas aos seus direitos serão respondidas em até <strong>15 dias</strong>, conforme estabelecido pela LGPD.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Consent -->
+                        <div id="consent" class="tab-content privacy-content">
+                            <h4 class="mb-4">Gerenciamento de Consentimentos</h4>
+                            
+                            <div class="consent-form">
+                                <h5 class="mb-3">Suas Preferências de Consentimento</h5>
+                                
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="marketingConsent" checked>
+                                    <label class="form-check-label" for="marketingConsent">
+                                        <strong>Marketing e Promoções</strong><br>
+                                        <small class="text-muted">Receber ofertas especiais, promoções e novidades por email e SMS.</small>
+                                    </label>
+                                </div>
+                                
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="analyticsConsent" checked>
+                                    <label class="form-check-label" for="analyticsConsent">
+                                        <strong>Análise e Melhorias</strong><br>
+                                        <small class="text-muted">Permitir análise de dados para melhorar nossos serviços e experiência do usuário.</small>
+                                    </label>
+                                </div>
+                                
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="personalizationConsent">
+                                    <label class="form-check-label" for="personalizationConsent">
+                                        <strong>Personalização</strong><br>
+                                        <small class="text-muted">Personalizar recomendações e conteúdo com base no seu histórico de pedidos.</small>
+                                    </label>
+                                </div>
+                                
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="thirdPartyConsent">
+                                    <label class="form-check-label" for="thirdPartyConsent">
+                                        <strong>Compartilhamento com Parceiros</strong><br>
+                                        <small class="text-muted">Compartilhar dados com parceiros para ofertas exclusivas (sempre anonimizados).</small>
+                                    </label>
+                                </div>
+                                
+                                <hr class="my-4">
+                                
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <small class="text-muted">Última atualização: 15 de Janeiro de 2024</small>
+                                    </div>
+                                    <button class="btn btn-primary" onclick="saveConsents()">
+                                        <i class="fas fa-save me-1"></i>Salvar Preferências
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <div class="alert alert-warning">
+                                    <h6><i class="fas fa-exclamation-triangle me-2"></i>Importante</h6>
+                                    <p class="mb-0">Você pode alterar suas preferências de consentimento a qualquer momento. Algumas funcionalidades podem ser limitadas caso você retire determinados consentimentos.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Requests -->
+                        <div id="requests" class="tab-content privacy-content">
+                            <h4 class="mb-4">Solicitações de Dados</h4>
+                            
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="data-request-form">
+                                        <h5 class="mb-3">Nova Solicitação</h5>
+                                        
+                                        <form>
+                                            <div class="mb-3">
+                                                <label class="form-label">Tipo de Solicitação</label>
+                                                <select class="form-select" required>
+                                                    <option value="">Selecione o tipo de solicitação</option>
+                                                    <option value="access">Acesso aos meus dados</option>
+                                                    <option value="correction">Correção de dados</option>
+                                                    <option value="deletion">Exclusão de dados</option>
+                                                    <option value="portability">Portabilidade de dados</option>
+                                                    <option value="opposition">Oposição ao tratamento</option>
+                                                    <option value="consent-revocation">Revogação de consentimento</option>
+                                                    <option value="other">Outro</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label">Email para Contato</label>
+                                                <input type="email" class="form-control" value="cliente@exemplo.com" required>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label">Descrição da Solicitação</label>
+                                                <textarea class="form-control" rows="4" placeholder="Descreva detalhadamente sua solicitação..." required></textarea>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label">Documentos Comprobatórios (opcional)</label>
+                                                <input type="file" class="form-control" multiple accept=".pdf,.jpg,.png">
+                                                <small class="text-muted">Formatos aceitos: PDF, JPG, PNG. Máximo 5MB por arquivo.</small>
+                                            </div>
+                                            
+                                            <div class="form-check mb-3">
+                                                <input class="form-check-input" type="checkbox" id="confirmIdentity" required>
+                                                <label class="form-check-label" for="confirmIdentity">
+                                                    Confirmo que sou o titular dos dados ou tenho autorização legal para fazer esta solicitação.
+                                                </label>
+                                            </div>
+                                            
+                                            <button type="submit" class="btn btn-primary" onclick="submitRequest(event)">
+                                                <i class="fas fa-paper-plane me-1"></i>Enviar Solicitação
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-info-circle me-2"></i>Informações Importantes</h6>
+                                            <ul class="list-unstyled mb-0">
+                                                <li class="mb-2"><i class="fas fa-clock me-2 text-primary"></i>Prazo de resposta: até 15 dias</li>
+                                                <li class="mb-2"><i class="fas fa-shield-alt me-2 text-success"></i>Processo seguro e confidencial</li>
+                                                <li class="mb-2"><i class="fas fa-envelope me-2 text-info"></i>Resposta por email</li>
+                                                <li class="mb-0"><i class="fas fa-phone me-2 text-warning"></i>Suporte: (11) 99999-9999</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <hr class="my-4">
+                            
+                            <h5 class="mb-3">Histórico de Solicitações</h5>
+                            
+                            <div class="request-item">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="mb-1">Solicitação de Acesso aos Dados</h6>
+                                        <p class="text-muted mb-1">Protocolo: #LGPD-2024-001</p>
+                                        <small class="text-muted">Enviado em: 10 de Janeiro de 2024</small>
+                                    </div>
+                                    <span class="status-badge status-approved">Concluída</span>
+                                </div>
+                                <p class="mt-2 mb-0">Solicitação de acesso a todos os dados pessoais armazenados no sistema.</p>
+                            </div>
+                            
+                            <div class="request-item">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="mb-1">Correção de Dados Cadastrais</h6>
+                                        <p class="text-muted mb-1">Protocolo: #LGPD-2024-002</p>
+                                        <small class="text-muted">Enviado em: 12 de Janeiro de 2024</small>
+                                    </div>
+                                    <span class="status-badge status-pending">Em Análise</span>
+                                </div>
+                                <p class="mt-2 mb-0">Solicitação de correção do endereço de entrega cadastrado.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Security -->
+                        <div id="security" class="tab-content privacy-content">
+                            <h4 class="mb-4">Segurança e Proteção de Dados</h4>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-lock me-2 text-primary"></i>Criptografia</h6>
+                                            <p class="card-text">Todos os dados são criptografados em trânsito (TLS 1.3) e em repouso (AES-256).</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-4">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-server me-2 text-success"></i>Infraestrutura</h6>
+                                            <p class="card-text">Servidores hospedados em data centers certificados ISO 27001 no Brasil.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-4">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-user-shield me-2 text-warning"></i>Controle de Acesso</h6>
+                                            <p class="card-text">Acesso restrito por função, autenticação multifator e logs de auditoria.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-4">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-backup me-2 text-info"></i>Backup e Recuperação</h6>
+                                            <p class="card-text">Backups automáticos diários com retenção segura e testes de recuperação.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <hr class="my-4">
+                            
+                            <h5 class="mb-3">Medidas de Segurança Implementadas</h5>
+                            
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <h6>Pseudonimização e Anonimização</h6>
+                                    <p class="mb-0">Dados pessoais são pseudonimizados sempre que possível e anonimizados para análises estatísticas.</p>
+                                </div>
+                                
+                                <div class="timeline-item">
+                                    <h6>Minimização de Dados</h6>
+                                    <p class="mb-0">Coletamos apenas os dados estritamente necessários para as finalidades declaradas.</p>
+                                </div>
+                                
+                                <div class="timeline-item">
+                                    <h6>Retenção Limitada</h6>
+                                    <p class="mb-0">Dados são mantidos apenas pelo tempo necessário, com exclusão automática após o período de retenção.</p>
+                                </div>
+                                
+                                <div class="timeline-item">
+                                    <h6>Monitoramento Contínuo</h6>
+                                    <p class="mb-0">Sistemas de monitoramento 24/7 para detectar e responder a incidentes de segurança.</p>
+                                </div>
+                                
+                                <div class="timeline-item">
+                                    <h6>Testes de Segurança</h6>
+                                    <p class="mb-0">Testes de penetração regulares e avaliações de vulnerabilidade por empresas especializadas.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Contact DPO -->
+                        <div id="contact" class="tab-content privacy-content">
+                            <h4 class="mb-4">Contato com o Encarregado de Dados (DPO)</h4>
+                            
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="contact-card">
+                                        <div class="contact-icon">
+                                            <i class="fas fa-user-tie"></i>
+                                        </div>
+                                        <h5>Dr. Maria Silva Santos</h5>
+                                        <p class="text-muted mb-3">Encarregada de Proteção de Dados (DPO)</p>
+                                        
+                                        <div class="row text-start">
+                                            <div class="col-md-6 mb-3">
+                                                <h6><i class="fas fa-envelope me-2"></i>Email</h6>
+                                                <p class="mb-0">dpo@pratorapido.com.br</p>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <h6><i class="fas fa-phone me-2"></i>Telefone</h6>
+                                                <p class="mb-0">(11) 3333-4444</p>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <h6><i class="fas fa-clock me-2"></i>Horário</h6>
+                                                <p class="mb-0">Segunda a Sexta<br>9h às 18h</p>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <h6><i class="fas fa-map-marker-alt me-2"></i>Endereço</h6>
+                                                <p class="mb-0">Av. Paulista, 1000<br>São Paulo/SP</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <hr class="my-4">
+                                        
+                                        <h6 class="mb-3">Quando Entrar em Contato</h6>
+                                        <ul class="text-start">
+                                            <li>Dúvidas sobre o tratamento de seus dados pessoais</li>
+                                            <li>Solicitações relacionadas aos seus direitos como titular</li>
+                                            <li>Denúncias sobre possíveis violações à LGPD</li>
+                                            <li>Informações sobre nossas práticas de privacidade</li>
+                                            <li>Sugestões para melhorar nossa política de privacidade</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-4">
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-certificate me-2"></i>Qualificações</h6>
+                                            <ul class="list-unstyled mb-0">
+                                                <li class="mb-2">• Certificação EXIN Privacy & Data Protection</li>
+                                                <li class="mb-2">• Especialização em Direito Digital</li>
+                                                <li class="mb-2">• 10+ anos em Proteção de Dados</li>
+                                                <li class="mb-0">• Membro da ANPPD</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><i class="fas fa-shield-alt me-2"></i>Compromisso</h6>
+                                            <p class="card-text mb-0">Nosso DPO é independente e tem acesso direto à alta administração, garantindo que suas preocupações sejam tratadas com a máxima seriedade.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Função para mostrar abas
+        function showTab(tabName) {
+            // Esconder todas as abas
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remover classe active de todos os links
+            document.querySelectorAll('.privacy-nav .nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Mostrar aba selecionada
+            document.getElementById(tabName).classList.add('active');
+            
+            // Adicionar classe active ao link clicado
+            event.target.classList.add('active');
+        }
+        
+        // Função para salvar consentimentos
+        function saveConsents() {
+            const consents = {
+                marketing: document.getElementById('marketingConsent').checked,
+                analytics: document.getElementById('analyticsConsent').checked,
+                personalization: document.getElementById('personalizationConsent').checked,
+                thirdParty: document.getElementById('thirdPartyConsent').checked
+            };
+            
+            console.log('Consentimentos salvos:', consents);
+            showNotification('Suas preferências de consentimento foram salvas com sucesso!', 'success');
+        }
+        
+        // Função para enviar solicitação
+        function submitRequest(event) {
+            event.preventDefault();
+            
+            const form = event.target.closest('form');
+            const formData = new FormData(form);
+            
+            // Simular envio da solicitação
+            showNotification('Sua solicitação foi enviada com sucesso! Você receberá um email de confirmação em breve.', 'success');
+            
+            // Limpar formulário
+            form.reset();
+        }
+        
+        // Função para mostrar notificações
+        function showNotification(message, type) {
+            const alertClass = {
+                'success': 'alert-success',
+                'warning': 'alert-warning',
+                'info': 'alert-info',
+                'danger': 'alert-danger'
+            }[type] || 'alert-info';
+            
+            const notification = document.createElement('div');
+            notification.className = `alert ${alertClass} alert-dismissible fade show position-fixed`;
+            notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+            notification.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 5000);
+        }
+        
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simular carregamento de preferências do usuário
+            console.log('Página de LGPD & Privacidade carregada');
+        });
+    </script>
+</body>
+</html>

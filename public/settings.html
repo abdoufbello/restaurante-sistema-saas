@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações - Prato Rápido SaaS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="assets/css/prato-rapido-theme.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1E1E1E;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+        
+        .sidebar {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);
+        }
+        
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 0.75rem 1rem;
+            margin: 0.25rem 0;
+            border-radius: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .main-content {
+            background-color: #F5F5F5;
+            min-height: 100vh;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);
+            border: none;
+            border-radius: 10px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 0, 0.3);
+        }
+        
+        .saas-badge {
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .settings-nav {
+            background: white;
+            border-radius: 15px;
+            padding: 1rem;
+        }
+        
+        .settings-nav .nav-link {
+            color: #666;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .settings-nav .nav-link:hover,
+        .settings-nav .nav-link.active {
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);
+            color: white;
+        }
+        
+        .settings-content {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+        }
+        
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            padding: 0.75rem 1rem;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: #FF6B00;
+            box-shadow: 0 0 0 0.2rem rgba(255, 107, 0, 0.25);
+        }
+        
+        .form-switch .form-check-input {
+            width: 3rem;
+            height: 1.5rem;
+        }
+        
+        .form-switch .form-check-input:checked {
+            background-color: #FF6B00;
+            border-color: #FF6B00;
+        }
+        
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .integration-card {
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .integration-card:hover {
+            border-color: #FF6B00;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .integration-card.connected {
+            border-color: #28a745;
+            background: #f8fff9;
+        }
+        
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-connected {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-disconnected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .notification-item {
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.3s;
+        }
+        
+        .notification-item:hover {
+            background: #f8f9fa;
+        }
+        
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+        
+        .color-picker {
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        
+        .theme-preview {
+            width: 100%;
+            height: 100px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .backup-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .progress-custom {
+            height: 10px;
+            border-radius: 5px;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar p-3">
+                <div class="text-center mb-4">
+                    <i class="fas fa-utensils text-white" style="font-size: 2.5rem;"></i>
+                    <h4 class="text-white mt-2">Prato Rápido</h4>
+                    <span class="saas-badge">SaaS Platform</span>
+                </div>
+                
+                <nav class="nav flex-column">
+                    <a class="nav-link" href="dashboard.html">
+                        <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                    </a>
+                    <a class="nav-link" href="kiosk.html">
+                        <i class="fas fa-desktop me-2"></i>Totem Self-Service
+                    </a>
+                    <a class="nav-link" href="orders.html">
+                        <i class="fas fa-shopping-cart me-2"></i>Pedidos
+                    </a>
+                    <a class="nav-link" href="dishes.html">
+                        <i class="fas fa-utensils me-2"></i>Cardápio
+                    </a>
+                    <a class="nav-link" href="reports.html">
+                        <i class="fas fa-chart-bar me-2"></i>Relatórios
+                    </a>
+                    <a class="nav-link" href="plans.html">
+                        <i class="fas fa-credit-card me-2"></i>Planos & Cobrança
+                    </a>
+                    <hr class="text-white-50">
+                    <a class="nav-link active" href="#">
+                        <i class="fas fa-cog me-2"></i>Configurações
+                    </a>
+                    <a class="nav-link" href="privacy.html">
+                        <i class="fas fa-shield-alt me-2"></i>LGPD & Privacidade
+                    </a>
+                    <a class="nav-link" href="login.html">
+                        <i class="fas fa-sign-out-alt me-2"></i>Sair
+                    </a>
+                </nav>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 main-content p-4">
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h1>Configurações</h1>
+                        <p class="text-muted mb-0">Personalize e configure seu sistema</p>
+                    </div>
+                    <div>
+                        <button class="btn btn-outline-primary me-2" onclick="exportSettings()">
+                            <i class="fas fa-download me-1"></i>Exportar
+                        </button>
+                        <button class="btn btn-success" onclick="saveAllSettings()">
+                            <i class="fas fa-save me-1"></i>Salvar Tudo
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <!-- Settings Navigation -->
+                    <div class="col-lg-3 mb-4">
+                        <div class="settings-nav">
+                            <h6 class="mb-3">Categorias</h6>
+                            <nav class="nav flex-column">
+                                <a class="nav-link active" href="#" onclick="showTab('general')">
+                                    <i class="fas fa-cog me-2"></i>Geral
+                                </a>
+                                <a class="nav-link" href="#" onclick="showTab('restaurant')">
+                                    <i class="fas fa-store me-2"></i>Restaurante
+                                </a>
+                                <a class="nav-link" href="#" onclick="showTab('users')">
+                                    <i class="fas fa-users me-2"></i>Usuários
+                                </a>
+                                <a class="nav-link" href="#" onclick="showTab('notifications')">
+                                    <i class="fas fa-bell me-2"></i>Notificações
+                                </a>
+                                <a class="nav-link" href="#" onclick="showTab('integrations')">
+                                    <i class="fas fa-plug me-2"></i>Integrações
+                                </a>
+                                <a class="nav-link" href="#" onclick="showTab('appearance')">
+                                    <i class="fas fa-palette me-2"></i>Aparência
+                                </a>
+                                <a class="nav-link" href="#" onclick="showTab('backup')">
+                                    <i class="fas fa-database me-2"></i>Backup
+                                </a>
+                                <a class="nav-link" href="#" onclick="showTab('security')">
+                                    <i class="fas fa-shield-alt me-2"></i>Segurança
+                                </a>
+                            </nav>
+                        </div>
+                    </div>
+                    
+                    <!-- Settings Content -->
+                    <div class="col-lg-9">
+                        <!-- General Settings -->
+                        <div id="general" class="tab-content active settings-content">
+                            <h4 class="mb-4">Configurações Gerais</h4>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Idioma do Sistema</label>
+                                    <select class="form-select">
+                                        <option value="pt-BR" selected>Português (Brasil)</option>
+                                        <option value="en-US">English (US)</option>
+                                        <option value="es-ES">Español</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Fuso Horário</label>
+                                    <select class="form-select">
+                                        <option value="America/Sao_Paulo" selected>São Paulo (GMT-3)</option>
+                                        <option value="America/New_York">New York (GMT-5)</option>
+                                        <option value="Europe/London">London (GMT+0)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Formato de Data</label>
+                                    <select class="form-select">
+                                        <option value="DD/MM/YYYY" selected>DD/MM/AAAA</option>
+                                        <option value="MM/DD/YYYY">MM/DD/AAAA</option>
+                                        <option value="YYYY-MM-DD">AAAA-MM-DD</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Formato de Moeda</label>
+                                    <select class="form-select">
+                                        <option value="BRL" selected>Real (R$)</option>
+                                        <option value="USD">Dólar ($)</option>
+                                        <option value="EUR">Euro (€)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <hr class="my-4">
+                            
+                            <h5 class="mb-3">Preferências do Sistema</h5>
+                            
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="autoSave" checked>
+                                <label class="form-check-label" for="autoSave">
+                                    Salvamento automático
+                                </label>
+                            </div>
+                            
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="soundNotifications" checked>
+                                <label class="form-check-label" for="soundNotifications">
+                                    Notificações sonoras
+                                </label>
+                            </div>
+                            
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="darkMode">
+                                <label class="form-check-label" for="darkMode">
+                                    Modo escuro
+                                </label>
+                            </div>
+                            
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="compactMode">
+                                <label class="form-check-label" for="compactMode">
+                                    Interface compacta
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Restaurant Settings -->
+                        <div id="restaurant" class="tab-content settings-content">
+                            <h4 class="mb-4">Configurações do Restaurante</h4>
+                            
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="mb-3">
+                                        <label class="form-label">Nome do Restaurante</label>
+                                        <input type="text" class="form-control" value="Restaurante Sabor & Arte">
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Descrição</label>
+                                        <textarea class="form-control" rows="3">Culinária brasileira contemporânea com ingredientes frescos e sabores únicos.</textarea>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">CNPJ</label>
+                                            <input type="text" class="form-control" value="12.345.678/0001-90">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Telefone</label>
+                                            <input type="text" class="form-control" value="(11) 99999-9999">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control" value="contato@saborarte.com.br">
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Endereço</label>
+                                        <textarea class="form-control" rows="3">Rua das Flores, 123
+Centro - São Paulo/SP
+CEP: 01234-567</textarea>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-4">
+                                    <div class="text-center">
+                                        <label class="form-label">Logo do Restaurante</label>
+                                        <div class="mb-3">
+                                            <div class="user-avatar mx-auto" style="width: 120px; height: 120px; font-size: 3rem;">
+                                                S&A
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-outline-primary btn-sm" onclick="uploadLogo()">
+                                            <i class="fas fa-upload me-1"></i>Alterar Logo
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <hr class="my-4">
+                            
+                            <h5 class="mb-3">Horário de Funcionamento</h5>
+                            
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Segunda a Sexta</label>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <input type="time" class="form-control" value="08:00">
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="time" class="form-control" value="22:00">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Sábado</label>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <input type="time" class="form-control" value="09:00">
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="time" class="form-control" value="23:00">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Domingo</label>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <input type="time" class="form-control" value="10:00">
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="time" class="form-control" value="20:00">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Users Settings -->
+                        <div id="users" class="tab-content settings-content">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h4>Gerenciamento de Usuários</h4>
+                                <button class="btn btn-primary" onclick="addUser()">
+                                    <i class="fas fa-plus me-1"></i>Adicionar Usuário
+                                </button>
+                            </div>
+                            
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Usuário</th>
+                                            <th>Email</th>
+                                            <th>Função</th>
+                                            <th>Status</th>
+                                            <th>Último Acesso</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="user-avatar me-3">CA</div>
+                                                    <div>
+                                                        <h6 class="mb-0">Carlos Administrador</h6>
+                                                        <small class="text-muted">Proprietário</small>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>carlos@saborarte.com.br</td>
+                                            <td><span class="badge bg-danger">Admin</span></td>
+                                            <td><span class="status-badge status-connected">Ativo</span></td>
+                                            <td>Agora</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary me-1" onclick="editUser(1)">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-secondary" onclick="resetPassword(1)">
+                                                    <i class="fas fa-key"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="user-avatar me-3">MS</div>
+                                                    <div>
+                                                        <h6 class="mb-0">Maria Silva</h6>
+                                                        <small class="text-muted">Gerente</small>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>maria@saborarte.com.br</td>
+                                            <td><span class="badge bg-warning">Gerente</span></td>
+                                            <td><span class="status-badge status-connected">Ativo</span></td>
+                                            <td>2 horas atrás</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary me-1" onclick="editUser(2)">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-secondary me-1" onclick="resetPassword(2)">
+                                                    <i class="fas fa-key"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-danger" onclick="deactivateUser(2)">
+                                                    <i class="fas fa-ban"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="user-avatar me-3">JS</div>
+                                                    <div>
+                                                        <h6 class="mb-0">João Santos</h6>
+                                                        <small class="text-muted">Funcionário</small>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>joao@saborarte.com.br</td>
+                                            <td><span class="badge bg-info">Funcionário</span></td>
+                                            <td><span class="status-badge status-disconnected">Inativo</span></td>
+                                            <td>1 semana atrás</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary me-1" onclick="editUser(3)">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-success me-1" onclick="activateUser(3)">
+                                                    <i class="fas fa-check"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-danger" onclick="deleteUser(3)">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <!-- Notifications Settings -->
+                        <div id="notifications" class="tab-content settings-content">
+                            <h4 class="mb-4">Configurações de Notificações</h4>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5 class="mb-3">Notificações por Email</h5>
+                                    
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="emailNewOrders" checked>
+                                        <label class="form-check-label" for="emailNewOrders">
+                                            Novos pedidos
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="emailOrderStatus" checked>
+                                        <label class="form-check-label" for="emailOrderStatus">
+                                            Mudanças de status dos pedidos
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="emailDailyReport">
+                                        <label class="form-check-label" for="emailDailyReport">
+                                            Relatório diário
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="emailWeeklyReport" checked>
+                                        <label class="form-check-label" for="emailWeeklyReport">
+                                            Relatório semanal
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="emailBilling" checked>
+                                        <label class="form-check-label" for="emailBilling">
+                                            Notificações de cobrança
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <h5 class="mb-3">Notificações Push</h5>
+                                    
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="pushNewOrders" checked>
+                                        <label class="form-check-label" for="pushNewOrders">
+                                            Novos pedidos
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="pushUrgentOrders" checked>
+                                        <label class="form-check-label" for="pushUrgentOrders">
+                                            Pedidos urgentes
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="pushLowStock">
+                                        <label class="form-check-label" for="pushLowStock">
+                                            Estoque baixo
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="pushSystemAlerts" checked>
+                                        <label class="form-check-label" for="pushSystemAlerts">
+                                            Alertas do sistema
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <hr class="my-4">
+                            
+                            <h5 class="mb-3">Configurações de Som</h5>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Som para Novos Pedidos</label>
+                                    <select class="form-select">
+                                        <option value="bell" selected>Sino</option>
+                                        <option value="chime">Carrilhão</option>
+                                        <option value="ding">Ding</option>
+                                        <option value="none">Sem som</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Volume</label>
+                                    <input type="range" class="form-range" min="0" max="100" value="75">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Integrations Settings -->
+                        <div id="integrations" class="tab-content settings-content">
+                            <h4 class="mb-4">Integrações</h4>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <div class="integration-card connected">
+                                        <div class="d-flex justify-content-between align-items-start mb-3">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fab fa-whatsapp text-success" style="font-size: 2rem;"></i>
+                                                <div class="ms-3">
+                                                    <h5 class="mb-1">WhatsApp Business</h5>
+                                                    <p class="text-muted mb-0">Notificações automáticas</p>
+                                                </div>
+                                            </div>
+                                            <span class="status-badge status-connected">Conectado</span>
+                                        </div>
+                                        <p class="mb-3">Envie notificações de pedidos diretamente para seus clientes via WhatsApp.</p>
+                                        <button class="btn btn-outline-danger btn-sm" onclick="disconnectIntegration('whatsapp')">
+                                            <i class="fas fa-unlink me-1"></i>Desconectar
+                                        </button>
+                                        <button class="btn btn-outline-primary btn-sm ms-2" onclick="configureIntegration('whatsapp')">
+                                            <i class="fas fa-cog me-1"></i>Configurar
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-4">
+                                    <div class="integration-card">
+                                        <div class="d-flex justify-content-between align-items-start mb-3">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fab fa-google text-primary" style="font-size: 2rem;"></i>
+                                                <div class="ms-3">
+                                                    <h5 class="mb-1">Google Analytics</h5>
+                                                    <p class="text-muted mb-0">Análise de dados</p>
+                                                </div>
+                                            </div>
+                                            <span class="status-badge status-disconnected">Desconectado</span>
+                                        </div>
+                                        <p class="mb-3">Acompanhe o comportamento dos clientes e otimize suas vendas.</p>
+                                        <button class="btn btn-primary btn-sm" onclick="connectIntegration('google')">
+                                            <i class="fas fa-link me-1"></i>Conectar
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-4">
+                                    <div class="integration-card">
+                                        <div class="d-flex justify-content-between align-items-start mb-3">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-credit-card text-warning" style="font-size: 2rem;"></i>
+                                                <div class="ms-3">
+                                                    <h5 class="mb-1">PagSeguro</h5>
+                                                    <p class="text-muted mb-0">Gateway de pagamento</p>
+                                                </div>
+                                            </div>
+                                            <span class="status-badge status-pending">Pendente</span>
+                                        </div>
+                                        <p class="mb-3">Aceite pagamentos online com segurança e praticidade.</p>
+                                        <button class="btn btn-warning btn-sm" onclick="configureIntegration('pagseguro')">
+                                            <i class="fas fa-cog me-1"></i>Finalizar Configuração
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-4">
+                                    <div class="integration-card">
+                                        <div class="d-flex justify-content-between align-items-start mb-3">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-truck text-info" style="font-size: 2rem;"></i>
+                                                <div class="ms-3">
+                                                    <h5 class="mb-1">iFood</h5>
+                                                    <p class="text-muted mb-0">Marketplace de delivery</p>
+                                                </div>
+                                            </div>
+                                            <span class="status-badge status-disconnected">Desconectado</span>
+                                        </div>
+                                        <p class="mb-3">Sincronize seu cardápio e pedidos com a plataforma iFood.</p>
+                                        <button class="btn btn-primary btn-sm" onclick="connectIntegration('ifood')">
+                                            <i class="fas fa-link me-1"></i>Conectar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Appearance Settings -->
+                        <div id="appearance" class="tab-content settings-content">
+                            <h4 class="mb-4">Personalização da Aparência</h4>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5 class="mb-3">Cores do Sistema</h5>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Cor Primária</label>
+                                        <div class="d-flex align-items-center">
+                                            <input type="color" class="color-picker me-3" value="#FF6B00">
+                                            <input type="text" class="form-control" value="#FF6B00" style="width: 100px;">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Cor Secundária</label>
+                                        <div class="d-flex align-items-center">
+                                            <input type="color" class="color-picker me-3" value="#FFC700">
+                                            <input type="text" class="form-control" value="#FFC700" style="width: 100px;">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Cor de Destaque</label>
+                                        <div class="d-flex align-items-center">
+                                            <input type="color" class="color-picker me-3" value="#28A745">
+                                            <input type="text" class="form-control" value="#28A745" style="width: 100px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <h5 class="mb-3">Pré-visualização</h5>
+                                    <div class="theme-preview" style="background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);">
+                                        Prato Rápido SaaS
+                                    </div>
+                                    
+                                    <button class="btn btn-outline-primary me-2" onclick="resetColors()">
+                                        <i class="fas fa-undo me-1"></i>Restaurar Padrão
+                                    </button>
+                                    <button class="btn btn-primary" onclick="applyColors()">
+                                        <i class="fas fa-palette me-1"></i>Aplicar Cores
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <hr class="my-4">
+                            
+                            <h5 class="mb-3">Layout</h5>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Tamanho da Fonte</label>
+                                    <select class="form-select">
+                                        <option value="small">Pequena</option>
+                                        <option value="medium" selected>Média</option>
+                                        <option value="large">Grande</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Densidade da Interface</label>
+                                    <select class="form-select">
+                                        <option value="compact">Compacta</option>
+                                        <option value="normal" selected>Normal</option>
+                                        <option value="comfortable">Confortável</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Backup Settings -->
+                        <div id="backup" class="tab-content settings-content">
+                            <h4 class="mb-4">Backup e Restauração</h4>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5 class="mb-3">Backup Automático</h5>
+                                    
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="autoBackup" checked>
+                                        <label class="form-check-label" for="autoBackup">
+                                            Ativar backup automático
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Frequência</label>
+                                        <select class="form-select">
+                                            <option value="daily" selected>Diário</option>
+                                            <option value="weekly">Semanal</option>
+                                            <option value="monthly">Mensal</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Horário</label>
+                                        <input type="time" class="form-control" value="02:00">
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Retenção (dias)</label>
+                                        <input type="number" class="form-control" value="30" min="1" max="365">
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <h5 class="mb-3">Backup Manual</h5>
+                                    
+                                    <div class="mb-3">
+                                        <button class="btn btn-primary w-100" onclick="createBackup()">
+                                            <i class="fas fa-download me-2"></i>Criar Backup Agora
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Restaurar Backup</label>
+                                        <input type="file" class="form-control" accept=".zip,.sql">
+                                    </div>
+                                    
+                                    <button class="btn btn-warning w-100" onclick="restoreBackup()">
+                                        <i class="fas fa-upload me-2"></i>Restaurar Backup
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <hr class="my-4">
+                            
+                            <h5 class="mb-3">Histórico de Backups</h5>
+                            
+                            <div class="backup-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-1">Backup Automático - 15/01/2024</h6>
+                                        <small class="text-muted">Tamanho: 45.2 MB | Tipo: Completo</small>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-sm btn-outline-primary me-2" onclick="downloadBackup('backup-20240115')">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-success" onclick="restoreSpecificBackup('backup-20240115')">
+                                            <i class="fas fa-undo"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="backup-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-1">Backup Manual - 10/01/2024</h6>
+                                        <small class="text-muted">Tamanho: 42.8 MB | Tipo: Completo</small>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-sm btn-outline-primary me-2" onclick="downloadBackup('backup-20240110')">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-success" onclick="restoreSpecificBackup('backup-20240110')">
+                                            <i class="fas fa-undo"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Security Settings -->
+                        <div id="security" class="tab-content settings-content">
+                            <h4 class="mb-4">Configurações de Segurança</h4>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5 class="mb-3">Autenticação</h5>
+                                    
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="twoFactor">
+                                        <label class="form-check-label" for="twoFactor">
+                                            Autenticação de dois fatores (2FA)
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="forcePasswordChange" checked>
+                                        <label class="form-check-label" for="forcePasswordChange">
+                                            Forçar troca de senha a cada 90 dias
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Tempo limite de sessão (minutos)</label>
+                                        <input type="number" class="form-control" value="60" min="15" max="480">
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Tentativas de login</label>
+                                        <input type="number" class="form-control" value="5" min="3" max="10">
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <h5 class="mb-3">Logs de Segurança</h5>
+                                    
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="logLogins" checked>
+                                        <label class="form-check-label" for="logLogins">
+                                            Registrar tentativas de login
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="logActions" checked>
+                                        <label class="form-check-label" for="logActions">
+                                            Registrar ações dos usuários
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="logDataChanges">
+                                        <label class="form-check-label" for="logDataChanges">
+                                            Registrar alterações de dados
+                                        </label>
+                                    </div>
+                                    
+                                    <button class="btn btn-outline-primary" onclick="viewSecurityLogs()">
+                                        <i class="fas fa-eye me-1"></i>Ver Logs de Segurança
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <hr class="my-4">
+                            
+                            <h5 class="mb-3">Política de Senhas</h5>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Comprimento mínimo</label>
+                                    <input type="number" class="form-control" value="8" min="6" max="20">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Histórico de senhas</label>
+                                    <input type="number" class="form-control" value="5" min="1" max="10">
+                                </div>
+                            </div>
+                            
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="requireUppercase" checked>
+                                <label class="form-check-label" for="requireUppercase">
+                                    Exigir letras maiúsculas
+                                </label>
+                            </div>
+                            
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="requireNumbers" checked>
+                                <label class="form-check-label" for="requireNumbers">
+                                    Exigir números
+                                </label>
+                            </div>
+                            
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="requireSpecialChars">
+                                <label class="form-check-label" for="requireSpecialChars">
+                                    Exigir caracteres especiais
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Função para mostrar abas
+        function showTab(tabName) {
+            // Esconder todas as abas
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remover classe active de todos os links
+            document.querySelectorAll('.settings-nav .nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Mostrar aba selecionada
+            document.getElementById(tabName).classList.add('active');
+            
+            // Adicionar classe active ao link clicado
+            event.target.classList.add('active');
+        }
+        
+        // Funções de configuração geral
+        function saveAllSettings() {
+            showNotification('Todas as configurações foram salvas com sucesso!', 'success');
+        }
+        
+        function exportSettings() {
+            showNotification('Configurações exportadas com sucesso!', 'success');
+        }
+        
+        // Funções de usuários
+        function addUser() {
+            showNotification('Funcionalidade de adicionar usuário em desenvolvimento', 'info');
+        }
+        
+        function editUser(id) {
+            showNotification(`Editando usuário ${id}...`, 'info');
+        }
+        
+        function resetPassword(id) {
+            if (confirm('Tem certeza que deseja resetar a senha deste usuário?')) {
+                showNotification('Email de reset de senha enviado!', 'success');
+            }
+        }
+        
+        function deactivateUser(id) {
+            if (confirm('Tem certeza que deseja desativar este usuário?')) {
+                showNotification('Usuário desativado com sucesso!', 'warning');
+            }
+        }
+        
+        function activateUser(id) {
+            showNotification('Usuário ativado com sucesso!', 'success');
+        }
+        
+        function deleteUser(id) {
+            if (confirm('Tem certeza que deseja excluir este usuário? Esta ação não pode ser desfeita.')) {
+                showNotification('Usuário excluído com sucesso!', 'success');
+            }
+        }
+        
+        // Funções de integrações
+        function connectIntegration(service) {
+            showNotification(`Conectando com ${service}...`, 'info');
+            setTimeout(() => {
+                showNotification(`${service} conectado com sucesso!`, 'success');
+            }, 2000);
+        }
+        
+        function disconnectIntegration(service) {
+            if (confirm(`Tem certeza que deseja desconectar ${service}?`)) {
+                showNotification(`${service} desconectado!`, 'warning');
+            }
+        }
+        
+        function configureIntegration(service) {
+            showNotification(`Abrindo configurações do ${service}...`, 'info');
+        }
+        
+        // Funções de aparência
+        function resetColors() {
+            document.querySelector('input[value="#FF6B00"]').value = '#FF6B00';
+            document.querySelector('input[value="#FFC700"]').value = '#FFC700';
+            document.querySelector('input[value="#28A745"]').value = '#28A745';
+            showNotification('Cores restauradas para o padrão!', 'info');
+        }
+        
+        function applyColors() {
+            showNotification('Cores aplicadas com sucesso!', 'success');
+        }
+        
+        // Funções de backup
+        function createBackup() {
+            showNotification('Criando backup...', 'info');
+            setTimeout(() => {
+                showNotification('Backup criado com sucesso!', 'success');
+            }, 3000);
+        }
+        
+        function restoreBackup() {
+            if (confirm('Tem certeza que deseja restaurar o backup? Todos os dados atuais serão substituídos.')) {
+                showNotification('Restaurando backup...', 'warning');
+            }
+        }
+        
+        function downloadBackup(backupId) {
+            showNotification(`Download do backup ${backupId} iniciado!`, 'success');
+        }
+        
+        function restoreSpecificBackup(backupId) {
+            if (confirm(`Tem certeza que deseja restaurar o backup ${backupId}?`)) {
+                showNotification(`Restaurando backup ${backupId}...`, 'warning');
+            }
+        }
+        
+        // Funções de segurança
+        function viewSecurityLogs() {
+            showNotification('Abrindo logs de segurança...', 'info');
+        }
+        
+        // Função para upload de logo
+        function uploadLogo() {
+            showNotification('Funcionalidade de upload em desenvolvimento', 'info');
+        }
+        
+        // Função para mostrar notificações
+        function showNotification(message, type) {
+            const alertClass = {
+                'success': 'alert-success',
+                'warning': 'alert-warning',
+                'info': 'alert-info',
+                'danger': 'alert-danger'
+            }[type] || 'alert-info';
+            
+            const notification = document.createElement('div');
+            notification.className = `alert ${alertClass} alert-dismissible fade show position-fixed`;
+            notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+            notification.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 5000);
+        }
+        
+        // Salvar configurações automaticamente quando houver mudanças
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('input, select, textarea');
+            inputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    if (document.getElementById('autoSave').checked) {
+                        // Simular salvamento automático
+                        console.log('Configuração salva automaticamente:', input.name || input.id, input.value);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

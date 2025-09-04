@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio - Prato Rápido</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-orange: #ff6b00;
+            --secondary-yellow: #ffc700;
+            --dark-gray: #2c3e50;
+            --light-gray: #f8f9fa;
+            --white: #ffffff;
+        }
+        .sidebar {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--secondary-yellow) 100%);
+        }
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 0.75rem 1rem;
+            margin: 0.25rem 0;
+            border-radius: 0.5rem;
+            transition: all 0.3s;
+        }
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .main-content {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+        }
+        .dish-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        .dish-card:hover {
+            transform: translateY(-5px);
+        }
+        .dish-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+        }
+        .price-tag {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: bold;
+        }
+        .availability-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 px-0">
+                <div class="sidebar p-3">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-utensils fa-2x text-white mb-2"></i>
+                        <h4 class="text-white mb-1">Prato Rápido</h4>
+                        <h6 class="text-white">Restaurante Demo</h6>
+                        <small class="text-white-50">Admin</small>
+                    </div>
+                    
+                    <nav class="nav flex-column">
+                        <a class="nav-link" href="dashboard.html">
+                            <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                        </a>
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-users me-2"></i>Funcionários
+                        </a>
+                        <a class="nav-link" href="categories.php">
+                            <i class="fas fa-tags me-2"></i>Categorias
+                        </a>
+                        <a class="nav-link active" href="cardapio_demo.html">
+                            <i class="fas fa-utensils me-2"></i>Pratos
+                        </a>
+                        <a class="nav-link" href="orders_demo.html">
+                            <i class="fas fa-shopping-cart me-2"></i>Pedidos
+                        </a>
+                        <hr class="text-white-50">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-sign-out-alt me-2"></i>Sair
+                        </a>
+                    </nav>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10">
+                <div class="main-content p-4">
+                    <!-- Header -->
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="d-flex align-items-center">
+                            <a href="dashboard.html" class="btn btn-outline-secondary me-3">
+                                <i class="fas fa-arrow-left me-2"></i>Voltar ao Dashboard
+                            </a>
+                            <h2 class="mb-0">Gerenciar Pratos</h2>
+                        </div>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDishModal">
+                            <i class="fas fa-plus me-2"></i>Novo Prato
+                        </button>
+                    </div>
+                    
+                    <!-- Lista de Pratos -->
+                    <div class="row">
+                        <!-- Prato 1 -->
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card dish-card position-relative">
+                                <div class="availability-badge">
+                                    <span class="badge bg-success">Disponível</span>
+                                </div>
+                                
+                                <div class="dish-image">
+                                    <i class="fas fa-utensils fa-3x"></i>
+                                </div>
+                                
+                                <div class="card-body">
+                                    <h5 class="card-title">Hambúrguer Artesanal</h5>
+                                    <p class="card-text text-muted small">Hambúrguer 180g, queijo, alface, tomate, cebola roxa e molho especial</p>
+                                    
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="price-tag">R$ 28,90</span>
+                                        <small class="text-muted">Lanches</small>
+                                    </div>
+                                    
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="fas fa-clock text-muted me-2"></i>
+                                        <small class="text-muted"><strong>Tempo de preparo:</strong> 15 min</small>
+                                    </div>
+                                    
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-sm btn-outline-primary flex-fill">
+                                            <i class="fas fa-edit me-1"></i>Editar
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-warning">
+                                            <i class="fas fa-eye-slash me-1"></i>Ocultar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Prato 2 -->
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card dish-card position-relative">
+                                <div class="availability-badge">
+                                    <span class="badge bg-success">Disponível</span>
+                                </div>
+                                
+                                <div class="dish-image">
+                                    <i class="fas fa-pizza-slice fa-3x"></i>
+                                </div>
+                                
+                                <div class="card-body">
+                                    <h5 class="card-title">Pizza Margherita</h5>
+                                    <p class="card-text text-muted small">Molho de tomate, mussarela, manjericão fresco e azeite</p>
+                                    
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="price-tag">R$ 35,90</span>
+                                        <small class="text-muted">Pizzas</small>
+                                    </div>
+                                    
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="fas fa-clock text-muted me-2"></i>
+                                        <small class="text-muted"><strong>Tempo de preparo:</strong> 20 min</small>
+                                    </div>
+                                    
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-sm btn-outline-primary flex-fill">
+                                            <i class="fas fa-edit me-1"></i>Editar
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-warning">
+                                            <i class="fas fa-eye-slash me-1"></i>Ocultar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Prato 3 -->
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card dish-card position-relative">
+                                <div class="availability-badge">
+                                    <span class="badge bg-secondary">Indisponível</span>
+                                </div>
+                                
+                                <div class="dish-image">
+                                    <i class="fas fa-fish fa-3x"></i>
+                                </div>
+                                
+                                <div class="card-body">
+                                    <h5 class="card-title">Salmão Grelhado</h5>
+                                    <p class="card-text text-muted small">Salmão grelhado com legumes e molho de ervas</p>
+                                    
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="price-tag">R$ 45,90</span>
+                                        <small class="text-muted">Peixes</small>
+                                    </div>
+                                    
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="fas fa-clock text-muted me-2"></i>
+                                        <small class="text-muted"><strong>Tempo de preparo:</strong> 25 min</small>
+                                    </div>
+                                    
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-sm btn-outline-primary flex-fill">
+                                            <i class="fas fa-edit me-1"></i>Editar
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-success">
+                                            <i class="fas fa-eye me-1"></i>Mostrar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Prato 4 -->
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card dish-card position-relative">
+                                <div class="availability-badge">
+                                    <span class="badge bg-success">Disponível</span>
+                                </div>
+                                
+                                <div class="dish-image">
+                                    <i class="fas fa-drumstick-bite fa-3x"></i>
+                                </div>
+                                
+                                <div class="card-body">
+                                    <h5 class="card-title">Frango à Parmegiana</h5>
+                                    <p class="card-text text-muted small">Filé de frango empanado com molho de tomate e queijo</p>
+                                    
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="price-tag">R$ 32,90</span>
+                                        <small class="text-muted">Pratos Principais</small>
+                                    </div>
+                                    
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="fas fa-clock text-muted me-2"></i>
+                                        <small class="text-muted"><strong>Tempo de preparo:</strong> 18 min</small>
+                                    </div>
+                                    
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-sm btn-outline-primary flex-fill">
+                                            <i class="fas fa-edit me-1"></i>Editar
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-warning">
+                                            <i class="fas fa-eye-slash me-1"></i>Ocultar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Prato 5 -->
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card dish-card position-relative">
+                                <div class="availability-badge">
+                                    <span class="badge bg-success">Disponível</span>
+                                </div>
+                                
+                                <div class="dish-image">
+                                    <i class="fas fa-ice-cream fa-3x"></i>
+                                </div>
+                                
+                                <div class="card-body">
+                                    <h5 class="card-title">Sorvete Artesanal</h5>
+                                    <p class="card-text text-muted small">Sorvete artesanal de baunilha com calda de chocolate</p>
+                                    
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="price-tag">R$ 12,90</span>
+                                        <small class="text-muted">Sobremesas</small>
+                                    </div>
+                                    
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="fas fa-clock text-muted me-2"></i>
+                                        <small class="text-muted"><strong>Tempo de preparo:</strong> 2 min</small>
+                                    </div>
+                                    
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-sm btn-outline-primary flex-fill">
+                                            <i class="fas fa-edit me-1"></i>Editar
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-warning">
+                                            <i class="fas fa-eye-slash me-1"></i>Ocultar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Prato 6 -->
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card dish-card position-relative">
+                                <div class="availability-badge">
+                                    <span class="badge bg-success">Disponível</span>
+                                </div>
+                                
+                                <div class="dish-image">
+                                    <i class="fas fa-coffee fa-3x"></i>
+                                </div>
+                                
+                                <div class="card-body">
+                                    <h5 class="card-title">Café Expresso</h5>
+                                    <p class="card-text text-muted small">Café expresso tradicional com grãos selecionados</p>
+                                    
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="price-tag">R$ 4,90</span>
+                                        <small class="text-muted">Bebidas</small>
+                                    </div>
+                                    
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="fas fa-clock text-muted me-2"></i>
+                                        <small class="text-muted"><strong>Tempo de preparo:</strong> 3 min</small>
+                                    </div>
+                                    
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-sm btn-outline-primary flex-fill">
+                                            <i class="fas fa-edit me-1"></i>Editar
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-warning">
+                                            <i class="fas fa-eye-slash me-1"></i>Ocultar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Adicionar Prato -->
+    <div class="modal fade" id="addDishModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adicionar Novo Prato</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="name" class="form-label">Nome do Prato *</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="price" class="form-label">Preço (R$) *</label>
+                                <input type="number" class="form-control" id="price" name="price" step="0.01" min="0.01" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Descrição</label>
+                            <textarea class="form-control" id="description" name="description" rows="2"></textarea>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="category" class="form-label">Categoria *</label>
+                                <select class="form-select" id="category" name="category" required>
+                                    <option value="">Selecione uma categoria</option>
+                                    <option value="1">Lanches</option>
+                                    <option value="2">Pizzas</option>
+                                    <option value="3">Pratos Principais</option>
+                                    <option value="4">Sobremesas</option>
+                                    <option value="5">Bebidas</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="prep_time" class="form-label">Tempo de Preparo (min)</label>
+                                <input type="number" class="form-control" id="prep_time" name="prep_time" min="1">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="ingredients" class="form-label">Ingredientes</label>
+                            <textarea class="form-control" id="ingredients" name="ingredients" rows="2" placeholder="Liste os principais ingredientes"></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="dish_image" class="form-label">Imagem do Prato</label>
+                            <input type="file" class="form-control" id="dish_image" name="dish_image" accept="image/*">
+                            <small class="text-muted">Formatos aceitos: JPEG, PNG, GIF, WebP. Tamanho máximo: 5MB</small>
+                        </div>
+                        
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="is_available" name="is_available" checked>
+                            <label class="form-check-label" for="is_available">
+                                Disponível para venda
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary">Salvar Prato</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

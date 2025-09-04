@@ -1,0 +1,115 @@
+# Configuração Dinâmica do Traefik
+
+# Middlewares de Segurança
+http:
+  middlewares:
+    # Headers de Segurança
+    secure-headers:
+      headers:
+        accessControlAllowMethods:
+          - GET
+          - OPTIONS
+          - PUT
+          - POST
+          - DELETE
+        accessControlMaxAge: 100
+        hostsProxyHeaders:
+          - "X-Forwarded-Host"
+        referrerPolicy: "same-origin"
+        customRequestHeaders:
+          X-Forwarded-Proto: "https"
+        customResponseHeaders:
+          X-Robots-Tag: "noindex,nofollow,nosnippet,noarchive"
+          X-Frame-Options: "DENY"
+          X-Content-Type-Options: "nosniff"
+          X-XSS-Protection: "1; mode=block"
+          Strict-Transport-Security: "max-age=31536000; includeSubDomains; preload"
+          Content-Security-Policy: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://code.jquery.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' https:; frame-ancestors 'none';"
+          Permissions-Policy: "geolocation=(), microphone=(), camera=()"
+
+    # Rate Limiting para API
+    api-ratelimit:
+      rateLimit:
+        burst: 100
+        average: 50
+        period: 1m
+        sourceCriterion:
+          ipStrategy:
+            depth: 1
+
+    # Rate Limiting Geral
+    general-ratelimit:
+      rateLimit:
+        burst: 200
+        average: 100
+        period: 1m
+        sourceCriterion:
+          ipStrategy:
+            depth: 1
+
+    # Compressão
+    compression:
+      compress:
+        excludedContentTypes:
+          - "text/event-stream"
+
+    # Autenticação Básica para Admin
+    admin-auth:
+      basicAuth:
+        users:
+          # admin:admin123 (altere a senha)
+          - "admin:$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi"
+
+    # Autenticação para Traefik Dashboard
+    traefik-auth:
+      basicAuth:
+        users:
+          # admin:traefik123 (altere a senha)
+          - "admin:$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi"
+
+    # Whitelist de IPs (opcional)
+    # ip-whitelist:
+    #   ipWhiteList:
+    #     sourceRange:
+    #       - "127.0.0.1/32"
+    #       - "192.168.1.0/24"
+    #       - "10.0.0.0/8"
+
+    # Redirect para HTTPS
+    https-redirect:
+      redirectScheme:
+        scheme: https
+        permanent: true
+
+    # Error Pages (opcional)
+    # error-pages:
+    #   errors:
+    #     status:
+    #       - "400-599"
+    #     service: error-pages-service
+    #     query: "/error.html"
+
+  # Serviços (se necessário)
+  services:
+    # Exemplo de serviço de erro personalizado
+    # error-pages-service:
+    #   loadBalancer:
+    #     servers:
+    #       - url: "http://error-pages:8080"
+
+# TLS Options
+tls:
+  options:
+    default:
+      sslStrategies:
+        - "tls.SniStrict"
+      minVersion: "VersionTLS12"
+      cipherSuites:
+        - "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
+        - "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305"
+        - "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+        - "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256"
+      curvePreferences:
+        - "CurveP521"
+        - "CurveP384"
+      sniStrict: true

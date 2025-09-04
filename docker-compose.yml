@@ -1,0 +1,206 @@
+version: '3.8'
+
+services:
+  # Traefik Proxy Reverso
+  traefik:
+    image: traefik:v3.0
+    container_name: prato-rapido-traefik
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"  # Dashboard Traefik
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./docker/traefik:/etc/traefik
+      - ./docker/traefik/acme.json:/acme.json
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.${DOMAIN}`)"
+      - "traefik.http.routers.traefik.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.traefik.service=api@internal"
+      - "traefik.http.routers.traefik.middlewares=auth"
+      - "traefik.http.middlewares.auth.basicauth.users=admin:$$2y$$10$$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi" # admin:password
+    networks:
+      - web
+    environment:
+      - DOMAIN=${DOMAIN}
+
+  # Aplicação Principal (Frontend)
+  app:
+    build: .
+    container_name: prato-rapido-app
+    restart: unless-stopped
+    volumes:
+      - ./public:/var/www/html/public
+      - ./app:/var/www/html/app
+      - ./uploads:/var/www/html/uploads
+      - ./writable:/var/www/html/writable
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app.rule=Host(`app.${DOMAIN}`)"
+      - "traefik.http.routers.app.tls.certresolver=letsencrypt"
+      - "traefik.http.services.app.loadbalancer.server.port=80"
+      - "traefik.http.routers.app.middlewares=secure-headers"
+    networks:
+      - web
+      - internal
+    depends_on:
+      - mysql
+      - redis
+    environment:
+      - CI_ENVIRONMENT=production
+      - DATABASE_HOST=mysql
+      - DATABASE_NAME=${DB_NAME}
+      - DATABASE_USER=${DB_USER}
+      - DATABASE_PASS=${DB_PASS}
+      - REDIS_HOST=redis
+
+  # API Backend
+  api:
+    build: .
+    container_name: prato-rapido-api
+    restart: unless-stopped
+    volumes:
+      - ./api:/var/www/html/api
+      - ./app:/var/www/html/app
+      - ./writable:/var/www/html/writable
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api.rule=Host(`api.${DOMAIN}`)"
+      - "traefik.http.routers.api.tls.certresolver=letsencrypt"
+      - "traefik.http.services.api.loadbalancer.server.port=80"
+      - "traefik.http.routers.api.middlewares=api-ratelimit,secure-headers"
+      - "traefik.http.middlewares.api-ratelimit.ratelimit.burst=100"
+      - "traefik.http.middlewares.api-ratelimit.ratelimit.average=50"
+    networks:
+      - web
+      - internal
+    depends_on:
+      - mysql
+      - redis
+    environment:
+      - CI_ENVIRONMENT=production
+      - DATABASE_HOST=mysql
+      - DATABASE_NAME=${DB_NAME}
+      - DATABASE_USER=${DB_USER}
+      - DATABASE_PASS=${DB_PASS}
+      - REDIS_HOST=redis
+
+  # Painel Admin
+  admin:
+    build: .
+    container_name: prato-rapido-admin
+    restart: unless-stopped
+    volumes:
+      - ./admin:/var/www/html/admin
+      - ./app:/var/www/html/app
+      - ./writable:/var/www/html/writable
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.admin.rule=Host(`admin.${DOMAIN}`)"
+      - "traefik.http.routers.admin.tls.certresolver=letsencrypt"
+      - "traefik.http.services.admin.loadbalancer.server.port=80"
+      - "traefik.http.routers.admin.middlewares=admin-auth,secure-headers"
+      - "traefik.http.middlewares.admin-auth.basicauth.users=admin:$$2y$$10$$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi"
+    networks:
+      - web
+      - internal
+    depends_on:
+      - mysql
+      - redis
+    environment:
+      - CI_ENVIRONMENT=production
+      - DATABASE_HOST=mysql
+      - DATABASE_NAME=${DB_NAME}
+      - DATABASE_USER=${DB_USER}
+      - DATABASE_PASS=${DB_PASS}
+      - REDIS_HOST=redis
+
+  # Banco de Dados MySQL
+  mysql:
+    image: mysql:8.0
+    container_name: prato-rapido-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database:/docker-entrypoint-initdb.d
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/custom.cnf
+    networks:
+      - internal
+    command: --default-authentication-plugin=mysql_native_password
+
+  # Redis para Cache e Sessões
+  redis:
+    image: redis:7-alpine
+    container_name: prato-rapido-redis
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    networks:
+      - internal
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASS}
+
+  # phpMyAdmin (opcional)
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: prato-rapido-phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: ${DB_ROOT_PASS}
+      UPLOAD_LIMIT: 100M
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.phpmyadmin.rule=Host(`db.${DOMAIN}`)"
+      - "traefik.http.routers.phpmyadmin.tls.certresolver=letsencrypt"
+      - "traefik.http.services.phpmyadmin.loadbalancer.server.port=80"
+      - "traefik.http.routers.phpmyadmin.middlewares=db-auth,secure-headers"
+      - "traefik.http.middlewares.db-auth.basicauth.users=admin:$$2y$$10$$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi"
+    networks:
+      - web
+      - internal
+    depends_on:
+      - mysql
+
+  # Portainer (Gerenciamento de Containers)
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: prato-rapido-portainer
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.portainer.rule=Host(`portainer.${DOMAIN}`)"
+      - "traefik.http.routers.portainer.tls.certresolver=letsencrypt"
+      - "traefik.http.services.portainer.loadbalancer.server.port=9000"
+    networks:
+      - web
+
+# Middlewares de Segurança
+  # Definidos via labels nos serviços acima
+  # secure-headers: adiciona headers de segurança
+  # api-ratelimit: limita requisições na API
+  # auth: autenticação básica
+
+volumes:
+  mysql_data:
+    driver: local
+  redis_data:
+    driver: local
+  portainer_data:
+    driver: local
+
+networks:
+  web:
+    external: true
+  internal:
+    external: false

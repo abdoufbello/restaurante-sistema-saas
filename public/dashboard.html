@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Prato Rápido SaaS | Restaurante Demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="assets/css/prato-rapido-theme.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1E1E1E;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+        
+        .sidebar {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);
+        }
+        
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 0.75rem 1rem;
+            margin: 0.25rem 0;
+            border-radius: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .stats-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .main-content {
+            background-color: #F5F5F5;
+            min-height: 100vh;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);
+            border: none;
+            border-radius: 10px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 0, 0.3);
+        }
+        
+        .saas-badge {
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .plan-info {
+            background: #E8F4FD;
+            border: 1px solid #B3D9F2;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .real-time-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #28a745;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar p-3">
+                <div class="text-center mb-4">
+                    <i class="fas fa-utensils text-white" style="font-size: 2.5rem;"></i>
+                    <h4 class="text-white mt-2">Prato Rápido</h4>
+                    <span class="saas-badge">SaaS Platform</span>
+                </div>
+                
+                <div class="plan-info text-center">
+                    <h6 class="text-primary mb-1">Plano Professional</h6>
+                    <small class="text-muted">R$ 199/mês</small>
+                </div>
+                
+                <nav class="nav flex-column">
+                    <a class="nav-link active" href="#">
+                        <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                    </a>
+                    <a class="nav-link" href="kiosk.html">
+                        <i class="fas fa-desktop me-2"></i>Totem Self-Service
+                    </a>
+                    <a class="nav-link" href="#" onclick="showSection('pedidos')">
+                        <i class="fas fa-shopping-cart me-2"></i>Pedidos
+                    </a>
+                    <a class="nav-link" href="cardapio_demo.html">
+                        <i class="fas fa-utensils me-2"></i>Cardápio
+                    </a>
+                    <a class="nav-link" href="reports.html">
+                        <i class="fas fa-chart-bar me-2"></i>Relatórios
+                    </a>
+                    <a class="nav-link" href="plans.html">
+                        <i class="fas fa-credit-card me-2"></i>Planos & Cobrança
+                    </a>
+                    <hr class="text-white-50">
+                    <a class="nav-link" href="settings.html">
+                        <i class="fas fa-cog me-2"></i>Configurações
+                    </a>
+                    <a class="nav-link" href="privacy.html">
+                        <i class="fas fa-shield-alt me-2"></i>LGPD & Privacidade
+                    </a>
+                    <a class="nav-link" href="login.html">
+                        <i class="fas fa-sign-out-alt me-2"></i>Sair
+                    </a>
+                </nav>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 main-content p-4">
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h1>Dashboard</h1>
+                        <p class="text-muted mb-0">
+                            <span class="real-time-indicator"></span>
+                            Dados em tempo real - Restaurante Demo SaaS
+                        </p>
+                    </div>
+                    <div>
+                        <span class="badge bg-success me-2">Online</span>
+                        <span class="text-muted">Admin: João Silva</span>
+                    </div>
+                </div>
+                
+                <!-- Stats Cards -->
+                <div class="row mb-4">
+                    <div class="col-md-3 mb-3">
+                        <div class="card stats-card text-center p-3">
+                            <i class="fas fa-shopping-cart text-primary" style="font-size: 2rem;"></i>
+                            <h3 class="mt-2 mb-1" id="ordersToday">47</h3>
+                            <p class="text-muted mb-0">Pedidos Hoje</p>
+                            <small class="text-success">+12% vs ontem</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card stats-card text-center p-3">
+                            <i class="fas fa-dollar-sign text-success" style="font-size: 2rem;"></i>
+                            <h3 class="mt-2 mb-1" id="revenueToday">R$ 2.847</h3>
+                            <p class="text-muted mb-0">Faturamento Hoje</p>
+                            <small class="text-success">+8% vs ontem</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card stats-card text-center p-3">
+                            <i class="fas fa-clock text-warning" style="font-size: 2rem;"></i>
+                            <h3 class="mt-2 mb-1" id="pendingOrders">8</h3>
+                            <p class="text-muted mb-0">Pedidos Pendentes</p>
+                            <small class="text-info">Tempo médio: 12min</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card stats-card text-center p-3">
+                            <i class="fas fa-users text-info" style="font-size: 2rem;"></i>
+                            <h3 class="mt-2 mb-1" id="customersToday">34</h3>
+                            <p class="text-muted mb-0">Clientes Hoje</p>
+                            <small class="text-success">+15% novos clientes</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Charts Row -->
+                <div class="row mb-4">
+                    <div class="col-md-8">
+                        <div class="card p-4">
+                            <h5 class="mb-3">Vendas dos Últimos 7 Dias</h5>
+                            <canvas id="salesChart" height="100"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card p-4">
+                            <h5 class="mb-3">Pratos Mais Vendidos</h5>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span>Hambúrguer Artesanal</span>
+                                    <span class="badge bg-primary">23</span>
+                                </div>
+                                <div class="progress" style="height: 5px;">
+                                    <div class="progress-bar" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span>Pizza Margherita</span>
+                                    <span class="badge bg-primary">19</span>
+                                </div>
+                                <div class="progress" style="height: 5px;">
+                                    <div class="progress-bar" style="width: 70%"></div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span>Lasanha Bolonhesa</span>
+                                    <span class="badge bg-primary">15</span>
+                                </div>
+                                <div class="progress" style="height: 5px;">
+                                    <div class="progress-bar" style="width: 55%"></div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span>Salada Caesar</span>
+                                    <span class="badge bg-primary">12</span>
+                                </div>
+                                <div class="progress" style="height: 5px;">
+                                    <div class="progress-bar" style="width: 45%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recent Orders -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="mb-0">Pedidos Recentes</h5>
+                                <button class="btn btn-primary btn-sm">
+                                    <i class="fas fa-sync-alt me-1"></i>Atualizar
+                                </button>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Cliente</th>
+                                            <th>Itens</th>
+                                            <th>Total</th>
+                                            <th>Status</th>
+                                            <th>Origem</th>
+                                            <th>Horário</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ordersTable">
+                                        <tr>
+                                            <td>#1047</td>
+                                            <td>Maria Santos</td>
+                                            <td>Hambúrguer Artesanal, Batata Frita</td>
+                                            <td>R$ 45,90</td>
+                                            <td><span class="badge bg-warning">Preparando</span></td>
+                                            <td><span class="badge bg-info"><i class="fas fa-desktop me-1"></i>Totem</span></td>
+                                            <td>14:32</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>#1046</td>
+                                            <td>João Silva</td>
+                                            <td>Pizza Margherita</td>
+                                            <td>R$ 38,50</td>
+                                            <td><span class="badge bg-success">Pronto</span></td>
+                                            <td><span class="badge bg-success"><i class="fas fa-mobile-alt me-1"></i>App</span></td>
+                                            <td>14:28</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>#1045</td>
+                                            <td>Ana Costa</td>
+                                            <td>Lasanha Bolonhesa, Refrigerante</td>
+                                            <td>R$ 32,90</td>
+                                            <td><span class="badge bg-info">Entregue</span></td>
+                                            <td><span class="badge bg-warning"><i class="fas fa-phone me-1"></i>Telefone</span></td>
+                                            <td>14:15</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seção de Pedidos Kanban -->
+    <div id="pedidos-section" class="container-fluid" style="display: none;">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div class="d-flex align-items-center">
+                        <button class="btn btn-outline-secondary me-3" onclick="showSection('dashboard')">
+                            <i class="fas fa-arrow-left me-2"></i>Voltar ao Dashboard
+                        </button>
+                        <h2 class="mb-0">Gestão de Pedidos - Kanban</h2>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary me-2">
+                            <i class="fas fa-sync-alt me-2"></i>Atualizar
+                        </button>
+                        <button class="btn btn-success">
+                            <i class="fas fa-plus me-2"></i>Novo Pedido
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Kanban Board -->
+                <div class="kanban-board">
+                    <div class="kanban-column">
+                        <div class="kanban-header bg-warning">
+                            <h5><i class="fas fa-clock me-2"></i>Pendentes</h5>
+                            <span class="badge bg-light text-dark">3</span>
+                        </div>
+                        <div class="kanban-cards">
+                            <div class="kanban-card">
+                                <div class="card-header">
+                                    <span class="order-id">#1048</span>
+                                    <span class="order-time">há 5 min</span>
+                                </div>
+                                <div class="card-body">
+                                    <h6>João Silva</h6>
+                                    <div class="order-origin">
+                                        <span class="badge bg-primary"><i class="fas fa-mobile-alt me-1"></i>App</span>
+                                    </div>
+                                    <div class="order-items">
+                                        <p>2x Pizza Margherita<br>1x Refrigerante</p>
+                                    </div>
+                                    <div class="order-total">
+                                        <strong>Total: R$ 82,50</strong>
+                                    </div>
+                                </div>
+                                <div class="card-actions">
+                                    <button class="btn btn-sm btn-success">Aceitar</button>
+                                    <button class="btn btn-sm btn-danger">Rejeitar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="kanban-column">
+                        <div class="kanban-header bg-info">
+                            <h5><i class="fas fa-fire me-2"></i>Preparando</h5>
+                            <span class="badge bg-light text-dark">2</span>
+                        </div>
+                        <div class="kanban-cards">
+                            <div class="kanban-card">
+                                <div class="card-header">
+                                    <span class="order-id">#1047</span>
+                                    <span class="order-time">há 12 min</span>
+                                </div>
+                                <div class="card-body">
+                                    <h6>Maria Santos</h6>
+                                    <div class="order-origin">
+                                        <span class="badge bg-warning"><i class="fas fa-phone me-1"></i>Telefone</span>
+                                    </div>
+                                    <div class="order-items">
+                                        <p>1x Lasanha Bolonhesa<br>1x Salada Caesar</p>
+                                    </div>
+                                    <div class="order-total">
+                                        <strong>Total: R$ 45,90</strong>
+                                    </div>
+                                </div>
+                                <div class="card-actions">
+                                    <button class="btn btn-sm btn-primary">Pronto</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="kanban-column">
+                        <div class="kanban-header bg-success">
+                            <h5><i class="fas fa-check me-2"></i>Prontos</h5>
+                            <span class="badge bg-light text-dark">1</span>
+                        </div>
+                        <div class="kanban-cards">
+                            <div class="kanban-card">
+                                <div class="card-header">
+                                    <span class="order-id">#1046</span>
+                                    <span class="order-time">há 18 min</span>
+                                </div>
+                                <div class="card-body">
+                                    <h6>Carlos Oliveira</h6>
+                                    <div class="order-origin">
+                                        <span class="badge bg-secondary"><i class="fas fa-desktop me-1"></i>Totem</span>
+                                    </div>
+                                    <div class="order-items">
+                                        <p>1x Hambúrguer Artesanal<br>1x Batata Frita</p>
+                                    </div>
+                                    <div class="order-total">
+                                        <strong>Total: R$ 28,50</strong>
+                                    </div>
+                                </div>
+                                <div class="card-actions">
+                                    <button class="btn btn-sm btn-info">Entregar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pedidos Finalizados -->
+                <div class="mt-5">
+                    <h4>Pedidos Finalizados Hoje</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header bg-light">
+                                    <h6 class="mb-0"><i class="fas fa-check-circle text-success me-2"></i>Entregues (15)</h6>
+                                </div>
+                                <div class="card-body" style="max-height: 300px; overflow-y: auto;">
+                                    <div class="finished-order">
+                                        <div class="d-flex justify-content-between">
+                                            <span><strong>#1045</strong> - Ana Costa</span>
+                                            <span class="text-muted">14:15</span>
+                                        </div>
+                                        <small class="text-muted">Lasanha Bolonhesa - R$ 32,90</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header bg-light">
+                                    <h6 class="mb-0"><i class="fas fa-times-circle text-danger me-2"></i>Cancelados (2)</h6>
+                                </div>
+                                <div class="card-body" style="max-height: 300px; overflow-y: auto;">
+                                    <div class="finished-order">
+                                        <div class="d-flex justify-content-between">
+                                            <span><strong>#1044</strong> - Pedro Lima</span>
+                                            <span class="text-muted">13:45</span>
+                                        </div>
+                                        <small class="text-muted">Pizza Calabresa - R$ 35,00</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Aguardar carregamento completo da página
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configurar gráfico de vendas com tratamento de erro
+            try {
+                const ctx = document.getElementById('salesChart');
+                if (!ctx) {
+                    console.error('Canvas salesChart não encontrado');
+                    return;
+                }
+                
+                const salesChart = new Chart(ctx.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                        datasets: [{
+                            label: 'Vendas (R$)',
+                            data: [1200, 1900, 1500, 2100, 2400, 2800, 2847],
+                            borderColor: '#FF6B00',
+                            backgroundColor: 'rgba(255, 107, 0, 0.1)',
+                            borderWidth: 3,
+                            pointBackgroundColor: '#FF6B00',
+                            pointBorderColor: '#ffffff',
+                            pointBorderWidth: 2,
+                            pointRadius: 6,
+                            pointHoverRadius: 8,
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        aspectRatio: 2,
+                        interaction: {
+                            intersect: false,
+                            mode: 'index'
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                titleColor: '#ffffff',
+                                bodyColor: '#ffffff',
+                                borderColor: '#FF6B00',
+                                borderWidth: 1,
+                                cornerRadius: 8,
+                                displayColors: false,
+                                callbacks: {
+                                    label: function(context) {
+                                        return 'Vendas: R$ ' + context.parsed.y.toLocaleString('pt-BR');
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: {
+                                    display: false
+                                },
+                                ticks: {
+                                    color: '#666666',
+                                    font: {
+                                        size: 12
+                                    }
+                                }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.1)',
+                                    drawBorder: false
+                                },
+                                ticks: {
+                                    color: '#666666',
+                                    font: {
+                                        size: 12
+                                    },
+                                    callback: function(value) {
+                                        return 'R$ ' + value.toLocaleString('pt-BR');
+                                    }
+                                }
+                            }
+                        },
+                        elements: {
+                            point: {
+                                hoverBackgroundColor: '#FF6B00'
+                            }
+                        }
+                    }
+                });
+                
+                // Função para atualizar dados do gráfico
+                window.updateSalesChart = function() {
+                    const newData = [
+                        Math.floor(Math.random() * 500) + 1000,
+                        Math.floor(Math.random() * 500) + 1500,
+                        Math.floor(Math.random() * 500) + 1300,
+                        Math.floor(Math.random() * 500) + 1800,
+                        Math.floor(Math.random() * 500) + 2200,
+                        Math.floor(Math.random() * 500) + 2500,
+                        Math.floor(Math.random() * 500) + 2700
+                    ];
+                    salesChart.data.datasets[0].data = newData;
+                    salesChart.update('active');
+                };
+                
+            } catch (error) {
+                console.error('Erro ao criar gráfico de vendas:', error);
+                // Mostrar mensagem de erro no lugar do gráfico
+                const chartContainer = document.getElementById('salesChart').parentElement;
+                chartContainer.innerHTML = '<div class="alert alert-warning"><i class="fas fa-exclamation-triangle me-2"></i>Erro ao carregar gráfico de vendas. Recarregue a página.</div>';
+            }
+        });
+        
+        // Simular atualizações em tempo real
+        function updateStats() {
+            const ordersToday = document.getElementById('ordersToday');
+            const revenueToday = document.getElementById('revenueToday');
+            const pendingOrders = document.getElementById('pendingOrders');
+            const customersToday = document.getElementById('customersToday');
+            
+            // Simular incremento nos pedidos
+            let currentOrders = parseInt(ordersToday.textContent);
+            if (Math.random() > 0.7) {
+                ordersToday.textContent = currentOrders + 1;
+                
+                // Atualizar receita
+                let currentRevenue = parseFloat(revenueToday.textContent.replace('R$ ', '').replace('.', '').replace(',', '.'));
+                let newRevenue = currentRevenue + (Math.random() * 50 + 20);
+                revenueToday.textContent = 'R$ ' + newRevenue.toLocaleString('pt-BR', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+            }
+            
+            // Simular mudanças nos pedidos pendentes
+            let currentPending = parseInt(pendingOrders.textContent);
+            if (Math.random() > 0.8) {
+                pendingOrders.textContent = Math.max(0, currentPending + (Math.random() > 0.5 ? 1 : -1));
+            }
+        }
+        
+        // Atualizar stats a cada 5 segundos
+        setInterval(updateStats, 5000);
+        
+        // Adicionar efeito de loading nos botões
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                if (this.textContent.includes('Atualizar')) {
+                    e.preventDefault();
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Atualizando...';
+                    this.disabled = true;
+                    
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                        this.disabled = false;
+                    }, 2000);
+                }
+            });
+        });
+        
+        // Função para alternar entre seções
+        function showSection(section) {
+            const dashboardSection = document.querySelector('.container-fluid:not(#pedidos-section)');
+            const pedidosSection = document.getElementById('pedidos-section');
+            
+            if (section === 'pedidos') {
+                dashboardSection.style.display = 'none';
+                pedidosSection.style.display = 'block';
+            } else {
+                dashboardSection.style.display = 'block';
+                pedidosSection.style.display = 'none';
+            }
+        }
+    </script>
+    
+    <style>
+        .kanban-board {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 20px 0;
+        }
+        
+        .kanban-column {
+            min-width: 300px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+        
+        .kanban-header {
+            padding: 15px;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            color: white;
+        }
+        
+        .kanban-header h5 {
+            margin: 0;
+            flex-grow: 1;
+        }
+        
+        .kanban-cards {
+            padding: 15px;
+            min-height: 400px;
+        }
+        
+        .kanban-card {
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        
+        .kanban-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        .kanban-card .card-header {
+            padding: 10px 15px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+        }
+        
+        .kanban-card .card-body {
+            padding: 15px;
+        }
+        
+        .kanban-card .card-actions {
+            padding: 10px 15px;
+            border-top: 1px solid #dee2e6;
+            display: flex;
+            gap: 8px;
+        }
+        
+        .order-id {
+            font-weight: bold;
+            color: #FF6B00;
+        }
+        
+        .order-time {
+            font-size: 0.85em;
+            color: #6c757d;
+        }
+        
+        .order-origin {
+            margin: 8px 0;
+        }
+        
+        .order-items {
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+        
+        .order-total {
+            color: #28a745;
+            font-size: 1.1em;
+        }
+        
+        .finished-order {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .finished-order:last-child {
+            border-bottom: none;
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,140 @@
+#!/usr/bin/env php
+<?php
+
+/*
+ * --------------------------------------------------------------------
+ * CodeIgniter command-line tools
+ * --------------------------------------------------------------------
+ * The main entry point into the CLI system and allows you to run
+ * commands and perform maintenance on your application.
+ *
+ * Because CodeIgniter can handle CLI requests as just another web request
+ * this class mainly acts as a passthrough to the framework itself.
+ */
+
+define('SPARKED', true);
+
+/*
+ * --------------------------------------------------------------------
+ * Refuse to run when called from php-cgi
+ * --------------------------------------------------------------------
+ */
+if (strpos(PHP_SAPI, 'cgi') === 0) {
+    exit("The cli tool is not supported when running php-cgi. It needs php-cli to function!\n\n");
+}
+
+// Path to the front controller
+define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR);
+
+// Ensure the current directory is pointing to the front controller's directory
+if (getcwd() . DIRECTORY_SEPARATOR !== FCPATH) {
+    chdir(FCPATH);
+}
+
+/*
+ * --------------------------------------------------------------------
+ * Load our paths config file
+ * --------------------------------------------------------------------
+ * This is the line that might need to be changed, depending on your
+ * folder structure. The APPPATH should point to your app folder.
+ */
+$pathsPath = realpath(FCPATH . '../app/Config/Paths.php');
+if (! $pathsPath || ! is_file($pathsPath)) {
+    define('APPPATH', realpath(__DIR__ . '/app/') . DIRECTORY_SEPARATOR);
+    define('ROOTPATH', realpath(APPPATH . '../') . DIRECTORY_SEPARATOR);
+    define('SYSTEMPATH', realpath(FCPATH . '../vendor/codeigniter4/framework/system/') . DIRECTORY_SEPARATOR);
+    define('WRITEPATH', realpath(FCPATH . '../writable/') . DIRECTORY_SEPARATOR);
+} else {
+    /*
+     * The path is there, so include it
+     */
+    require $pathsPath;
+}
+
+$paths = new \Config\Paths();
+
+// Path to the system directory
+if (! defined('SYSTEMPATH')) {
+    define('SYSTEMPATH', realpath(FCPATH . '../vendor/codeigniter4/framework/system/') . DIRECTORY_SEPARATOR);
+}
+
+/*
+ * --------------------------------------------------------------------
+ * Now that we know the path, set the main constants
+ * --------------------------------------------------------------------
+ */
+// The path to the "app" directory
+if (! defined('APPPATH')) {
+    define('APPPATH', realpath(FCPATH . '../app/') . DIRECTORY_SEPARATOR);
+}
+
+// The path to the project root directory. Just above the system directory.
+if (! defined('ROOTPATH')) {
+    define('ROOTPATH', realpath(APPPATH . '../') . DIRECTORY_SEPARATOR);
+}
+
+// The path to the "writable" directory
+if (! defined('WRITEPATH')) {
+    define('WRITEPATH', realpath(FCPATH . '../writable/') . DIRECTORY_SEPARATOR);
+}
+
+// The path to the "tests" directory
+if (! defined('TESTPATH')) {
+    define('TESTPATH', realpath(FCPATH . '../tests/') . DIRECTORY_SEPARATOR);
+}
+
+/*
+ * --------------------------------------------------------------------
+ * Environment-Specific Constants
+ * --------------------------------------------------------------------
+ * Load any environment-specific constants from a .env file
+ * if they are available. These can override any of the constants set above.
+ */
+if (! class_exists('CodeIgniter\Config\DotEnv', false)) {
+    require_once SYSTEMPATH . 'Config/DotEnv.php';
+}
+
+(new \CodeIgniter\Config\DotEnv(ROOTPATH))->load();
+
+/*
+ * --------------------------------------------------------------------
+ * Important charset-related stuff
+ * --------------------------------------------------------------------
+ *
+ * Configure mbstring and/or iconv if they are enabled and set MB_ENABLED
+ * and ICONV_ENABLED constants, so that we don't repeatedly do extension_loaded()
+ * or function_exists() calls.
+ *
+ * Note: UTF-8 class depends on this. It used to be done in it's constructor,
+ * but it's _not_ class-specific, so this seems like a better place.
+ */
+if (extension_loaded('mbstring')) {
+    define('MB_ENABLED', true);
+    // mbstring.internal_encoding is deprecated starting with PHP 5.6
+    // and it's usage triggers E_DEPRECATED messages.
+    @ini_set('default_charset', 'UTF-8');
+    mb_internal_encoding('UTF-8');
+} else {
+    define('MB_ENABLED', false);
+}
+
+if (extension_loaded('iconv')) {
+    define('ICONV_ENABLED', true);
+    // iconv.internal_encoding is deprecated starting with PHP 5.6
+    // and it's usage triggers E_DEPRECATED messages.
+    @ini_set('default_charset', 'UTF-8');
+    iconv_set_encoding('internal_encoding', 'UTF-8');
+} else {
+    define('ICONV_ENABLED', false);
+}
+
+/*
+ * --------------------------------------------------------------------
+ * Load the framework
+ * --------------------------------------------------------------------
+ * And away we go...
+ */
+require_once SYSTEMPATH . 'Boot.php';
+
+// Boot the CodeIgniter application
+exit(\CodeIgniter\Boot::bootSpark($paths));

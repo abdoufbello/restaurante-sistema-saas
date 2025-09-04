@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planos & Cobrança - Prato Rápido SaaS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="assets/css/prato-rapido-theme.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1E1E1E;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+        
+        .sidebar {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);
+        }
+        
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 0.75rem 1rem;
+            margin: 0.25rem 0;
+            border-radius: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .main-content {
+            background-color: #F5F5F5;
+            min-height: 100vh;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);
+            border: none;
+            border-radius: 10px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 0, 0.3);
+        }
+        
+        .saas-badge {
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .plan-info {
+            background: #E8F4FD;
+            border: 1px solid #B3D9F2;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .plan-card {
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .plan-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .plan-card.current {
+            border: 3px solid #FF6B00;
+            transform: scale(1.05);
+        }
+        
+        .plan-card.current::before {
+            content: 'PLANO ATUAL';
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 0 15px 0 15px;
+        }
+        
+        .plan-header {
+            text-align: center;
+            padding: 2rem 1rem 1rem;
+        }
+        
+        .plan-price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #FF6B00;
+        }
+        
+        .plan-period {
+            color: #666;
+            font-size: 1rem;
+        }
+        
+        .plan-features {
+            padding: 0 1.5rem;
+        }
+        
+        .plan-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-included {
+            color: #28a745;
+        }
+        
+        .feature-not-included {
+            color: #dc3545;
+            text-decoration: line-through;
+            opacity: 0.5;
+        }
+        
+        .billing-history {
+            background: white;
+            border-radius: 15px;
+        }
+        
+        .invoice-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-paid {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-overdue {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .usage-meter {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .usage-bar {
+            height: 10px;
+            border-radius: 5px;
+            background: #e9ecef;
+            overflow: hidden;
+        }
+        
+        .usage-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);
+            transition: width 0.3s;
+        }
+        
+        .payment-method {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .payment-method.active {
+            border-color: #FF6B00;
+            background: #fff8f5;
+        }
+        
+        .upgrade-banner {
+            background: linear-gradient(135deg, #FF6B00 0%, #FFC700 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .comparison-table {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .comparison-table th {
+            background: #f8f9fa;
+            border: none;
+            padding: 1rem;
+            font-weight: 600;
+        }
+        
+        .comparison-table td {
+            border: none;
+            padding: 1rem;
+            vertical-align: middle;
+        }
+        
+        .feature-check {
+            color: #28a745;
+            font-size: 1.2rem;
+        }
+        
+        .feature-cross {
+            color: #dc3545;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar p-3">
+                <div class="text-center mb-4">
+                    <i class="fas fa-utensils text-white" style="font-size: 2.5rem;"></i>
+                    <h4 class="text-white mt-2">Prato Rápido</h4>
+                    <span class="saas-badge">SaaS Platform</span>
+                </div>
+                
+                <div class="plan-info text-center">
+                    <h6 class="text-primary mb-1">Plano Professional</h6>
+                    <small class="text-muted">R$ 199/mês</small>
+                </div>
+                
+                <nav class="nav flex-column">
+                    <a class="nav-link" href="dashboard.html">
+                        <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                    </a>
+                    <a class="nav-link" href="kiosk.html">
+                        <i class="fas fa-desktop me-2"></i>Totem Self-Service
+                    </a>
+                    <a class="nav-link" href="orders.html">
+                        <i class="fas fa-shopping-cart me-2"></i>Pedidos
+                    </a>
+                    <a class="nav-link" href="dishes.html">
+                        <i class="fas fa-utensils me-2"></i>Cardápio
+                    </a>
+                    <a class="nav-link" href="reports.html">
+                        <i class="fas fa-chart-bar me-2"></i>Relatórios
+                    </a>
+                    <a class="nav-link active" href="#">
+                        <i class="fas fa-credit-card me-2"></i>Planos & Cobrança
+                    </a>
+                    <hr class="text-white-50">
+                    <a class="nav-link" href="settings.html">
+                        <i class="fas fa-cog me-2"></i>Configurações
+                    </a>
+                    <a class="nav-link" href="privacy.html">
+                        <i class="fas fa-shield-alt me-2"></i>LGPD & Privacidade
+                    </a>
+                    <a class="nav-link" href="login.html">
+                        <i class="fas fa-sign-out-alt me-2"></i>Sair
+                    </a>
+                </nav>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 main-content p-4">
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h1>Planos & Cobrança</h1>
+                        <p class="text-muted mb-0">Gerencie sua assinatura e histórico de pagamentos</p>
+                    </div>
+                    <div>
+                        <button class="btn btn-outline-primary me-2" onclick="downloadInvoice()">
+                            <i class="fas fa-download me-1"></i>Baixar Fatura
+                        </button>
+                        <button class="btn btn-success" onclick="addPaymentMethod()">
+                            <i class="fas fa-plus me-1"></i>Adicionar Cartão
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Current Plan Status -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-md-3 text-center">
+                                        <i class="fas fa-crown text-warning" style="font-size: 3rem;"></i>
+                                        <h4 class="mt-2 mb-0">Plano Professional</h4>
+                                        <p class="text-muted">Ativo desde 15/01/2024</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>Uso do Plano Atual</h6>
+                                        <div class="usage-meter">
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <span>Pedidos Mensais</span>
+                                                <span><strong>1.247</strong> / 5.000</span>
+                                            </div>
+                                            <div class="usage-bar">
+                                                <div class="usage-fill" style="width: 25%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="usage-meter">
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <span>Usuários Ativos</span>
+                                                <span><strong>3</strong> / 10</span>
+                                            </div>
+                                            <div class="usage-bar">
+                                                <div class="usage-fill" style="width: 30%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <h3 class="text-success mb-1">R$ 199,00</h3>
+                                        <p class="text-muted mb-2">por mês</p>
+                                        <small class="text-muted">Próxima cobrança: 15/02/2024</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Upgrade Banner -->
+                <div class="upgrade-banner">
+                    <h3><i class="fas fa-rocket me-2"></i>Pronto para crescer?</h3>
+                    <p class="mb-3">Upgrade para o plano Enterprise e tenha acesso a recursos avançados de analytics, integrações e suporte prioritário.</p>
+                    <button class="btn btn-light btn-lg" onclick="showUpgradeModal()">
+                        <i class="fas fa-arrow-up me-2"></i>Fazer Upgrade
+                    </button>
+                </div>
+                
+                <!-- Plans Comparison -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h3 class="mb-4">Compare os Planos</h3>
+                    </div>
+                    <div class="col-lg-4 mb-4">
+                        <div class="card plan-card h-100">
+                            <div class="plan-header">
+                                <h4>Starter</h4>
+                                <div class="plan-price">R$ 99</div>
+                                <div class="plan-period">/mês</div>
+                            </div>
+                            <ul class="list-unstyled plan-features">
+                                <li><i class="fas fa-check feature-included me-2"></i>Até 1.000 pedidos/mês</li>
+                                <li><i class="fas fa-check feature-included me-2"></i>2 usuários</li>
+                                <li><i class="fas fa-check feature-included me-2"></i>Dashboard básico</li>
+                                <li><i class="fas fa-check feature-included me-2"></i>Suporte por email</li>
+                                <li><i class="fas fa-times feature-not-included me-2"></i>Relatórios avançados</li>
+                                <li><i class="fas fa-times feature-not-included me-2"></i>Integrações</li>
+                                <li><i class="fas fa-times feature-not-included me-2"></i>API personalizada</li>
+                            </ul>
+                            <div class="p-3">
+                                <button class="btn btn-outline-primary w-100" onclick="changePlan('starter')">
+                                    Downgrade
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-4">
+                        <div class="card plan-card current h-100">
+                            <div class="plan-header">
+                                <h4>Professional</h4>
+                                <div class="plan-price">R$ 199</div>
+                                <div class="plan-period">/mês</div>
+                            </div>
+                            <ul class="list-unstyled plan-features">
+                                <li><i class="fas fa-check feature-included me-2"></i>Até 5.000 pedidos/mês</li>
+                                <li><i class="fas fa-check feature-included me-2"></i>10 usuários</li>
+                                <li><i class="fas fa-check feature-included me-2"></i>Dashboard completo</li>
+                                <li><i class="fas fa-check feature-included me-2"></i>Suporte prioritário</li>
+                                <li><i class="fas fa-check feature-included me-2"></i>Relatórios avançados</li>
+                                <li><i class="fas fa-check feature-included me-2"></i>Integrações básicas</li>
+                                <li><i class="fas fa-times feature-not-included me-2"></i>API personalizada</li>
+                            </ul>
+                            <div class="p-3">
+                                <button class="btn btn-primary w-100" disabled>
+                                    Plano Atual
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-4">
+                        <div class="card plan-card h-100">
+                            <div class="plan-header">
+                                <h4>Enterprise</h4>
+                                <div class="plan-price">R$ 399</div>
+                                <div class="plan-period">/mês</div>
+                            </div>
+                            <ul class="list-unstyled plan-features">
+                                <li><i class="fas fa-check feature-included me-2"></i>Pedidos ilimitados</li>
+                                <li><i class="fas fa-check feature-included me-2"></i>Usuários ilimitados</li>
+                                <li><i class="fas fa-check feature-included me-2"></i>Dashboard personalizado</li>
+                                <li><i class="fas fa-check feature-included me-2"></i>Suporte 24/7</li>
+                                <li><i class="fas fa-check feature-included me-2"></i>Relatórios personalizados</li>
+                                <li><i class="fas fa-check feature-included me-2"></i>Todas as integrações</li>
+                                <li><i class="fas fa-check feature-included me-2"></i>API personalizada</li>
+                            </ul>
+                            <div class="p-3">
+                                <button class="btn btn-success w-100" onclick="changePlan('enterprise')">
+                                    Fazer Upgrade
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Payment Methods -->
+                <div class="row mb-4">
+                    <div class="col-lg-6 mb-4">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Métodos de Pagamento</h5>
+                                <button class="btn btn-sm btn-outline-primary" onclick="addPaymentMethod()">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <div class="payment-method active">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <i class="fab fa-cc-visa text-primary me-3" style="font-size: 2rem;"></i>
+                                            <div>
+                                                <h6 class="mb-0">**** **** **** 4532</h6>
+                                                <small class="text-muted">Expira em 12/2026</small>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <span class="badge bg-success">Principal</span>
+                                            <button class="btn btn-sm btn-outline-danger ms-2" onclick="removePaymentMethod(1)">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="payment-method">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <i class="fab fa-cc-mastercard text-warning me-3" style="font-size: 2rem;"></i>
+                                            <div>
+                                                <h6 class="mb-0">**** **** **** 8901</h6>
+                                                <small class="text-muted">Expira em 08/2025</small>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-sm btn-outline-primary me-2" onclick="setMainPaymentMethod(2)">
+                                                Definir como Principal
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger" onclick="removePaymentMethod(2)">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">Informações de Cobrança</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label class="form-label">Nome da Empresa</label>
+                                    <input type="text" class="form-control" value="Restaurante Sabor & Arte Ltda." readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">CNPJ</label>
+                                    <input type="text" class="form-control" value="12.345.678/0001-90" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Email para Faturas</label>
+                                    <input type="email" class="form-control" value="financeiro@saborarte.com.br">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Endereço</label>
+                                    <textarea class="form-control" rows="3">Rua das Flores, 123
+Centro - São Paulo/SP
+CEP: 01234-567</textarea>
+                                </div>
+                                <button class="btn btn-primary" onclick="updateBillingInfo()">
+                                    <i class="fas fa-save me-1"></i>Salvar Alterações
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Billing History -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card billing-history">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Histórico de Faturas</h5>
+                                <div>
+                                    <select class="form-select form-select-sm" style="width: auto;">
+                                        <option>Últimos 12 meses</option>
+                                        <option>Últimos 6 meses</option>
+                                        <option>Último ano</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-hover mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Data</th>
+                                                <th>Descrição</th>
+                                                <th>Valor</th>
+                                                <th>Status</th>
+                                                <th>Ações</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>15/01/2024</td>
+                                                <td>Plano Professional - Janeiro 2024</td>
+                                                <td>R$ 199,00</td>
+                                                <td><span class="invoice-status status-paid">Pago</span></td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary me-1" onclick="viewInvoice('INV-2024-001')">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-secondary" onclick="downloadInvoice('INV-2024-001')">
+                                                        <i class="fas fa-download"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>15/12/2023</td>
+                                                <td>Plano Professional - Dezembro 2023</td>
+                                                <td>R$ 199,00</td>
+                                                <td><span class="invoice-status status-paid">Pago</span></td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary me-1" onclick="viewInvoice('INV-2023-012')">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-secondary" onclick="downloadInvoice('INV-2023-012')">
+                                                        <i class="fas fa-download"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>15/11/2023</td>
+                                                <td>Plano Professional - Novembro 2023</td>
+                                                <td>R$ 199,00</td>
+                                                <td><span class="invoice-status status-paid">Pago</span></td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary me-1" onclick="viewInvoice('INV-2023-011')">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-secondary" onclick="downloadInvoice('INV-2023-011')">
+                                                        <i class="fas fa-download"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>15/10/2023</td>
+                                                <td>Plano Starter - Outubro 2023</td>
+                                                <td>R$ 99,00</td>
+                                                <td><span class="invoice-status status-paid">Pago</span></td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary me-1" onclick="viewInvoice('INV-2023-010')">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-secondary" onclick="downloadInvoice('INV-2023-010')">
+                                                        <i class="fas fa-download"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>15/09/2023</td>
+                                                <td>Plano Starter - Setembro 2023</td>
+                                                <td>R$ 99,00</td>
+                                                <td><span class="invoice-status status-paid">Pago</span></td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary me-1" onclick="viewInvoice('INV-2023-009')">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-secondary" onclick="downloadInvoice('INV-2023-009')">
+                                                        <i class="fas fa-download"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Plan Change Modal -->
+    <div class="modal fade" id="planChangeModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="planChangeTitle">Alterar Plano</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="planChangeBody">
+                    <!-- Conteúdo será preenchido via JavaScript -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="confirmPlanChange()">Confirmar Alteração</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Payment Method Modal -->
+    <div class="modal fade" id="paymentMethodModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adicionar Método de Pagamento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="paymentForm">
+                        <div class="mb-3">
+                            <label class="form-label">Número do Cartão</label>
+                            <input type="text" class="form-control" placeholder="1234 5678 9012 3456" maxlength="19">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Data de Expiração</label>
+                                    <input type="text" class="form-control" placeholder="MM/AA" maxlength="5">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">CVV</label>
+                                    <input type="text" class="form-control" placeholder="123" maxlength="4">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Nome no Cartão</label>
+                            <input type="text" class="form-control" placeholder="Nome como aparece no cartão">
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="setAsMain">
+                            <label class="form-check-label" for="setAsMain">
+                                Definir como método principal
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="savePaymentMethod()">Salvar Cartão</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let currentPlan = 'professional';
+        let pendingPlanChange = null;
+        
+        // Função para mostrar modal de upgrade
+        function showUpgradeModal() {
+            changePlan('enterprise');
+        }
+        
+        // Função para alterar plano
+        function changePlan(newPlan) {
+            const plans = {
+                'starter': { name: 'Starter', price: 99, features: ['1.000 pedidos/mês', '2 usuários', 'Dashboard básico'] },
+                'professional': { name: 'Professional', price: 199, features: ['5.000 pedidos/mês', '10 usuários', 'Relatórios avançados'] },
+                'enterprise': { name: 'Enterprise', price: 399, features: ['Pedidos ilimitados', 'Usuários ilimitados', 'API personalizada'] }
+            };
+            
+            const plan = plans[newPlan];
+            const currentPlanData = plans[currentPlan];
+            
+            pendingPlanChange = newPlan;
+            
+            const isUpgrade = plan.price > currentPlanData.price;
+            const isDowngrade = plan.price < currentPlanData.price;
+            
+            document.getElementById('planChangeTitle').textContent = 
+                isUpgrade ? 'Fazer Upgrade' : isDowngrade ? 'Fazer Downgrade' : 'Alterar Plano';
+            
+            const priceDiff = Math.abs(plan.price - currentPlanData.price);
+            const changeType = isUpgrade ? 'upgrade' : 'downgrade';
+            
+            document.getElementById('planChangeBody').innerHTML = `
+                <div class="text-center mb-4">
+                    <h4>Plano ${plan.name}</h4>
+                    <div class="display-6 text-primary">R$ ${plan.price}/mês</div>
+                </div>
+                
+                <div class="alert ${isUpgrade ? 'alert-info' : 'alert-warning'}">
+                    <h6>${isUpgrade ? 'Upgrade' : 'Downgrade'} do Plano</h6>
+                    <p class="mb-0">
+                        ${isUpgrade ? 
+                            `Você será cobrado R$ ${priceDiff} adicionais por mês. A cobrança será proporcional ao período restante.` :
+                            `Você economizará R$ ${priceDiff} por mês. O valor será creditado na próxima fatura.`
+                        }
+                    </p>
+                </div>
+                
+                <h6>Recursos inclusos:</h6>
+                <ul class="list-unstyled">
+                    ${plan.features.map(feature => `<li><i class="fas fa-check text-success me-2"></i>${feature}</li>`).join('')}
+                </ul>
+                
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="confirmChange" required>
+                    <label class="form-check-label" for="confirmChange">
+                        Confirmo que desejo ${isUpgrade ? 'fazer upgrade' : 'fazer downgrade'} para o plano ${plan.name}
+                    </label>
+                </div>
+            `;
+            
+            new bootstrap.Modal(document.getElementById('planChangeModal')).show();
+        }
+        
+        // Função para confirmar mudança de plano
+        function confirmPlanChange() {
+            const confirmCheckbox = document.getElementById('confirmChange');
+            if (!confirmCheckbox.checked) {
+                showNotification('Por favor, confirme a alteração do plano', 'warning');
+                return;
+            }
+            
+            const plans = {
+                'starter': 'Starter',
+                'professional': 'Professional', 
+                'enterprise': 'Enterprise'
+            };
+            
+            currentPlan = pendingPlanChange;
+            bootstrap.Modal.getInstance(document.getElementById('planChangeModal')).hide();
+            
+            showNotification(`Plano alterado para ${plans[currentPlan]} com sucesso!`, 'success');
+            
+            // Simular atualização da interface
+            setTimeout(() => {
+                location.reload();
+            }, 2000);
+        }
+        
+        // Função para adicionar método de pagamento
+        function addPaymentMethod() {
+            new bootstrap.Modal(document.getElementById('paymentMethodModal')).show();
+        }
+        
+        // Função para salvar método de pagamento
+        function savePaymentMethod() {
+            // Validação básica
+            const form = document.getElementById('paymentForm');
+            const inputs = form.querySelectorAll('input[required], input[type="text"]');
+            let isValid = true;
+            
+            inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    isValid = false;
+                    input.classList.add('is-invalid');
+                } else {
+                    input.classList.remove('is-invalid');
+                }
+            });
+            
+            if (!isValid) {
+                showNotification('Por favor, preencha todos os campos', 'warning');
+                return;
+            }
+            
+            bootstrap.Modal.getInstance(document.getElementById('paymentMethodModal')).hide();
+            showNotification('Método de pagamento adicionado com sucesso!', 'success');
+            
+            // Simular atualização da lista
+            setTimeout(() => {
+                location.reload();
+            }, 1500);
+        }
+        
+        // Função para remover método de pagamento
+        function removePaymentMethod(id) {
+            if (confirm('Tem certeza que deseja remover este método de pagamento?')) {
+                showNotification('Método de pagamento removido', 'info');
+            }
+        }
+        
+        // Função para definir método principal
+        function setMainPaymentMethod(id) {
+            showNotification('Método de pagamento definido como principal', 'success');
+        }
+        
+        // Função para atualizar informações de cobrança
+        function updateBillingInfo() {
+            showNotification('Informações de cobrança atualizadas com sucesso!', 'success');
+        }
+        
+        // Função para visualizar fatura
+        function viewInvoice(invoiceId) {
+            showNotification(`Abrindo fatura ${invoiceId}...`, 'info');
+        }
+        
+        // Função para baixar fatura
+        function downloadInvoice(invoiceId) {
+            showNotification(`Download da fatura ${invoiceId || 'atual'} iniciado`, 'success');
+        }
+        
+        // Função para mostrar notificações
+        function showNotification(message, type) {
+            const alertClass = {
+                'success': 'alert-success',
+                'warning': 'alert-warning',
+                'info': 'alert-info',
+                'danger': 'alert-danger'
+            }[type] || 'alert-info';
+            
+            const notification = document.createElement('div');
+            notification.className = `alert ${alertClass} alert-dismissible fade show position-fixed`;
+            notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+            notification.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 5000);
+        }
+        
+        // Formatação de campos
+        document.addEventListener('DOMContentLoaded', function() {
+            // Formatação do número do cartão
+            const cardNumberInput = document.querySelector('input[placeholder="1234 5678 9012 3456"]');
+            if (cardNumberInput) {
+                cardNumberInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+                    let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+                    e.target.value = formattedValue;
+                });
+            }
+            
+            // Formatação da data de expiração
+            const expiryInput = document.querySelector('input[placeholder="MM/AA"]');
+            if (expiryInput) {
+                expiryInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length >= 2) {
+                        value = value.substring(0, 2) + '/' + value.substring(2, 4);
+                    }
+                    e.target.value = value;
+                });
+            }
+        });
+    </script>
+</body>
+</html>

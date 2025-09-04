@@ -1,0 +1,334 @@
+/* ==========================================================================
+   Prato Rápido - Nova Identidade Visual
+   Paleta de cores e tipografia para melhor contraste e experiência visual
+   ========================================================================== */
+
+/* Importação das fontes Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+/* ==========================================================================
+   VARIÁVEIS CSS - PALETA DE CORES
+   ========================================================================== */
+:root {
+  /* Cores Primárias */
+  --primary-orange: #FF6B00;
+  --primary-orange-rgb: 255, 107, 0;
+  
+  /* Cores Secundárias */
+  --secondary-yellow: #FFC700;
+  --secondary-yellow-rgb: 255, 199, 0;
+  
+  /* Cores Neutras */
+  --text-primary: #1E1E1E;
+  --text-secondary: #6B6B6B;
+  --background-light: #F5F5F5;
+  --background-white: #FFFFFF;
+  
+  /* Cores de Feedback */
+  --success-green: #00B894;
+  --warning-yellow: #FDCB6E;
+  --error-red: #D63031;
+  
+  /* Tipografia */
+  --font-heading: 'Poppins', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+/* ==========================================================================
+   RESET E BASE STYLES
+   ========================================================================== */
+body {
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  background-color: var(--background-white);
+  line-height: 1.6;
+}
+
+/* Títulos */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+h1 {
+  font-weight: 700;
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-weight: 600;
+  font-size: 2rem;
+}
+
+h3 {
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+/* Texto do corpo */
+p, span, div {
+  font-family: var(--font-body);
+  color: var(--text-primary);
+}
+
+.text-muted {
+  color: var(--text-secondary) !important;
+}
+
+/* ==========================================================================
+   BOTÕES - NOVA IDENTIDADE VISUAL
+   ========================================================================== */
+.btn-primary {
+  background-color: var(--primary-orange);
+  border-color: var(--primary-orange);
+  color: var(--background-white);
+  font-family: var(--font-body);
+  font-weight: 500;
+  border-radius: 10px;
+  padding: 12px 24px;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #E55A00;
+  border-color: #E55A00;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(var(--primary-orange-rgb), 0.3);
+}
+
+.btn-secondary {
+  background-color: var(--secondary-yellow);
+  border-color: var(--secondary-yellow);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-weight: 500;
+  border-radius: 10px;
+  padding: 12px 24px;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #E6B300;
+  border-color: #E6B300;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(var(--secondary-yellow-rgb), 0.3);
+}
+
+.btn-success {
+  background-color: var(--success-green);
+  border-color: var(--success-green);
+  color: var(--background-white);
+}
+
+.btn-warning {
+  background-color: var(--warning-yellow);
+  border-color: var(--warning-yellow);
+  color: var(--text-primary);
+}
+
+.btn-danger {
+  background-color: var(--error-red);
+  border-color: var(--error-red);
+  color: var(--background-white);
+}
+
+/* ==========================================================================
+   CARDS E CONTAINERS
+   ========================================================================== */
+.card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+  background-color: var(--background-light);
+  border-bottom: 1px solid #dee2e6;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ==========================================================================
+   FORMULÁRIOS
+   ========================================================================== */
+.form-control {
+  border: 2px solid #dee2e6;
+  border-radius: 10px;
+  padding: 12px 15px;
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: var(--primary-orange);
+  box-shadow: 0 0 0 0.2rem rgba(var(--primary-orange-rgb), 0.25);
+}
+
+.form-label {
+  font-family: var(--font-body);
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+/* ==========================================================================
+   NAVEGAÇÃO E MENU
+   ========================================================================== */
+.navbar {
+  background-color: var(--background-white) !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--primary-orange) !important;
+  font-size: 1.5rem;
+}
+
+.nav-link {
+  font-family: var(--font-body);
+  font-weight: 500;
+  color: var(--text-primary) !important;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: var(--primary-orange) !important;
+}
+
+/* ==========================================================================
+   ALERTAS E FEEDBACK
+   ========================================================================== */
+.alert-success {
+  background-color: rgba(0, 184, 148, 0.1);
+  border-color: var(--success-green);
+  color: var(--success-green);
+}
+
+.alert-warning {
+  background-color: rgba(253, 203, 110, 0.1);
+  border-color: var(--warning-yellow);
+  color: #B8860B;
+}
+
+.alert-danger {
+  background-color: rgba(214, 48, 49, 0.1);
+  border-color: var(--error-red);
+  color: var(--error-red);
+}
+
+/* ==========================================================================
+   TABELAS
+   ========================================================================== */
+.table {
+  font-family: var(--font-body);
+}
+
+.table thead th {
+  background-color: var(--background-light);
+  color: var(--text-primary);
+  font-weight: 600;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(var(--primary-orange-rgb), 0.05);
+}
+
+/* ==========================================================================
+   BADGES E TAGS
+   ========================================================================== */
+.badge {
+  font-family: var(--font-body);
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 6px 12px;
+}
+
+.badge-primary {
+  background-color: var(--primary-orange);
+  color: var(--background-white);
+}
+
+.badge-secondary {
+  background-color: var(--secondary-yellow);
+  color: var(--text-primary);
+}
+
+/* ==========================================================================
+   UTILITÁRIOS DE COR
+   ========================================================================== */
+.text-primary-orange {
+  color: var(--primary-orange) !important;
+}
+
+.text-secondary-yellow {
+  color: var(--secondary-yellow) !important;
+}
+
+.bg-primary-orange {
+  background-color: var(--primary-orange) !important;
+}
+
+.bg-secondary-yellow {
+  background-color: var(--secondary-yellow) !important;
+}
+
+.bg-light-gray {
+  background-color: var(--background-light) !important;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE
+   ========================================================================== */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}
+
+/* ==========================================================================
+   ANIMAÇÕES E TRANSIÇÕES
+   ========================================================================== */
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
